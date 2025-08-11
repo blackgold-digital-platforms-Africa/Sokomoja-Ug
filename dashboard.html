@@ -1,0 +1,2761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+
+    <title>SoKoMoja UG - Connect with Local Retailers and Shop</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #079c4a;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --success-color: #27ae60;
+            --uganda-yellow: #FCDC04;
+            --uganda-red: #D90000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+/* Refined Header CSS - keeps styles scoped to header */
+
+header {
+    background-color: white;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-logo {
+    height: 55px;
+    margin-right: 15px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-grow: 1;
+    justify-content: flex-start;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.nav-links > li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-links a {
+    color: var(--dark-color);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--accent-color);
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.language-toggle button {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--dark-color);
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.language-toggle button.active,
+.language-toggle button:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+#signOutBtn {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: #fff;
+    border: none;
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+#signOutBtn:hover,
+#signOutBtn:focus {
+    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    box-shadow: 0 6px 20px rgba(255, 75, 43, 0.6);
+    outline: none;
+    transform: translateY(-2px);
+}
+
+#signOutBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 75, 43, 0.3);
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    header {
+        height: 60px;
+        padding: 0 15px;
+    }
+
+    .header-logo {
+        height: 45px;
+        margin-right: 10px;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+        overflow-y: auto;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1rem;
+        border-radius: 0;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--primary-color);
+        padding: 6px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .mobile-menu-btn:hover {
+        background-color: rgba(44, 62, 80, 0.1);
+    }
+
+    #signOutBtn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        box-shadow: none;
+        text-align: center;
+    }
+
+    .user-actions {
+        gap: 10px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .language-toggle button {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+     /* Header Styles */
+header {
+    background-color: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+header {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* space between items */
+}
+.header-logo {
+    height: 80px;
+    margin-right: 15px; /* space between logo and text */
+    vertical-align: middle;
+    display: inline-block; /* keep inline with text */
+    position: relative; /* remove absolute */
+    top: 0; /* reset top */
+    transform: none; /* reset transform */
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    padding-left: 0; /* remove left padding */
+}
+
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px; /* reduced gap between text logo and home button */
+    padding-left: 140px; /* keep space for logo */
+}
+.logo {
+    font-size: 1.5rem;
+    white-space: nowrap;
+}
+
+.home-btn {
+    font-size: 1rem;
+    margin-left: auto; /* push home button to the right side */
+}
+header .logo {
+    font-size: 1rem; /* reduce text size */
+    white-space: nowrap; /* prevent wrapping */
+}
+
+.user-actions a.icon-link {
+    font-size: 0.9rem; /* smaller icons */
+}
+
+.language-toggle button {
+    font-size: 0.8rem; /* smaller language buttons */
+    padding: 4px 8px;
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    height: 70px;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.logo span {
+    color: var(--accent-color);
+    font-weight: 800;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.nav-links > li {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    color: var(--dark-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-links a:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--accent-color);
+}
+
+.nav-links a.active {
+    color: var(--accent-color);
+    background-color: rgba(231, 76, 60, 0.08);
+}
+/* Header Refinement */
+header {
+    background-color: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    padding: 0 18px; /* add horizontal padding for better spacing */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* space between logo and nav */
+    height: 70px;
+}
+
+/* Logo */
+.header-logo {
+    height: 60px; /* slightly smaller for better mobile fit */
+    margin-right: 15px;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-grow: 1;
+    justify-content: flex-start;
+    padding-left: 0;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.nav-links > li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-links a {
+    color: var(--dark-color);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--accent-color);
+}
+
+/* Sign Out Button */
+#signOutBtn {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: #fff;
+    border: none;
+    padding: 10px 24px; /* wider for easier tap */
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+    transition: all 0.3s ease;
+    user-select: none;
+    outline-offset: 4px;
+    outline-color: transparent;
+    outline-style: solid;
+    white-space: nowrap;
+}
+
+#signOutBtn:hover,
+#signOutBtn:focus {
+    background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    box-shadow: 0 6px 20px rgba(255, 75, 43, 0.6);
+    outline-color: #ff4b2b;
+    transform: translateY(-2px);
+}
+
+#signOutBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(255, 75, 43, 0.3);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    padding: 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.mobile-menu-btn:hover {
+    background-color: rgba(44, 62, 80, 0.1);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header {
+        padding: 0 10px;
+        height: 60px;
+    }
+
+    .header-logo {
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .navbar {
+        padding-left: 0;
+        gap: 8px;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+        transition: left 0.3s ease;
+        overflow-y: auto;
+        z-index: 999;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 12px 20px;
+        border-radius: 0;
+        font-size: 1rem;
+    }
+
+    #signOutBtn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        box-shadow: none;
+        text-align: center;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+    }
+}
+  /* Modern Sign Out Button Styles */
+    #signOutBtn {
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255, 75, 43, 0.4);
+        transition: all 0.3s ease;
+        user-select: none;
+        outline-offset: 4px;
+        outline-color: transparent;
+        outline-style: solid;
+    }
+
+    #signOutBtn:hover,
+    #signOutBtn:focus {
+        background: linear-gradient(135deg, #ff4b2b, #ff416c);
+        box-shadow: 0 6px 20px rgba(255, 75, 43, 0.6);
+        outline-color: #ff4b2b;
+        transform: translateY(-2px);
+    }
+
+    #signOutBtn:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 10px rgba(255, 75, 43, 0.3);
+    }
+.dropdown > a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.15);
+    padding: 10px 0;
+    min-width: 220px;
+    z-index: 1000;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.3s ease forwards;
+}
+
+.dropdown-menu li a {
+    padding: 10px 20px;
+    color: var(--dark-color);
+    transition: all 0.2s;
+    display: block;
+    white-space: nowrap;
+}
+
+.dropdown-menu li a:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+    padding-left: 25px;
+    color: var(--accent-color);
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown-menu.show {
+    display: block;
+}
+
+ /* Updated Categories Dropdown Styles */
+        .hero-categories-dropdown {
+            position: relative;
+            margin-right: 12px;
+            flex: 0 0 180px;
+        }
+        
+        .hero-categories-dropdown .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+        
+        #heroCategoriesMenu, #headerCategoriesMenu {
+            display: none;
+            background: white;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 10px 30px rgba(44, 62, 80, 0.15);
+            padding: 10px 0;
+            margin-top: 5px;
+        }
+        
+        #heroCategoriesMenu.show, #headerCategoriesMenu.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        #heroCategoriesMenu li, #headerCategoriesMenu li {
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        #heroCategoriesMenu li:hover, #headerCategoriesMenu li:hover {
+            background-color: rgba(231, 76, 60, 0.1);
+            padding-left: 25px;
+        }
+        
+        /* Mobile optimization for categories dropdown */
+        @media (max-width: 768px) {
+            .hero-categories-dropdown {
+                flex: 1 1 100%;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            #heroCategoriesMenu, #headerCategoriesMenu {
+                position: static;
+                width: 100%;
+                max-height: 300px;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+            }
+        }
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.icon-link {
+    color: var(--dark-color);
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+}
+
+.icon-link:hover {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--accent-color);
+    transform: scale(1.1);
+}
+
+.language-toggle {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(44, 62, 80, 0.08);
+    padding: 4px;
+    border-radius: 50px;
+    margin-left: 10px;
+}
+
+.language-toggle button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px 12px;
+    font-weight: 600;
+    border-radius: 50px;
+    transition: all 0.3s;
+    font-size: 0.8rem;
+    min-width: 40px;
+}
+
+.language-toggle button.active,
+.language-toggle button:hover {
+    color: white;
+    background: var(--accent-color);
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.mobile-menu-btn:hover {
+    background-color: rgba(44, 62, 80, 0.1);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .nav-links {
+        gap: 0;
+    }
+    
+    .nav-links a {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .nav-links {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background-color: white;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        transition: all 0.3s;
+        overflow-y: auto;
+    }
+    
+    .nav-links.active {
+        left: 0;
+    }
+    
+    .nav-links li {
+        width: 100%;
+        height: auto;
+        padding: 5px 20px;
+    }
+    
+    .nav-links a {
+        padding: 12px 20px;
+        width: 100%;
+        border-radius: 0;
+        justify-content: space-between;
+    }
+    
+    .dropdown-menu {
+        position: static;
+        box-shadow: none;
+        border: none;
+        display: none;
+        width: 100%;
+        animation: none;
+    }
+    
+    .dropdown-menu.show {
+        display: block;
+    }
+    
+    .user-actions {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 1.5rem;
+    }
+    
+    .user-actions {
+        gap: 8px;
+    }
+    
+    .language-toggle {
+        margin-left: 5px;
+    }
+    
+    .language-toggle button {
+        padding: 5px 8px;
+        min-width: 35px;
+    }
+}
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), 
+                        url('our-heritage-2006.png');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.4) 100%);
+            z-index: 0;
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            animation: fadeInUp 1s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        .search-bar {
+            max-width: 700px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            animation: fadeIn 1s ease 0.4s forwards;
+            opacity: 0;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 16px 20px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .search-bar button {
+            padding: 0 30px;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+            height: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .search-bar button:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Modern Categories Button */
+        .hero-categories-dropdown .btn,
+        #headerCategoriesBtn {
+            background: var(--light-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 6px;
+            padding: 12px 22px;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(44,62,80,0.08);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            outline: none;
+            height: 50px;
+        }
+        
+        .hero-categories-dropdown .btn:hover,
+        #headerCategoriesBtn:hover {
+            background: var(--accent-color);
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(44,62,80,0.15);
+        }
+        
+        .hero-categories-dropdown .btn:focus,
+        #headerCategoriesBtn:focus {
+            outline: 2px solid var(--accent-color);
+        }
+
+        .hero-categories-dropdown {
+            position: relative;
+            margin-right: 12px;
+            flex: 0 0 180px;
+        }
+
+        /* Features Section */
+        .features {
+            background-color: white;
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+
+        /* Products Section */
+        .products {
+            background-color: #f9f9f9;
+            padding: 80px 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s;
+        }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+        }
+
+        .btn-accent {
+            background-color: var(--accent-color);
+        }
+
+        .btn-accent:hover {
+            background-color: #c0392b;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        /* Fruits & Vegetables Section */
+        .fruits-veggies {
+            background-color: #fff;
+            padding: 80px 0;
+        }
+
+        .fv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .fv-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .fv-image {
+            height: 180px;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fv-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: all 0.3s;
+            padding: 10px;
+        }
+
+        .fv-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .fv-info h3 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+        }
+
+        .fv-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--success-color);
+            margin-bottom: 15px;
+        }
+
+        .fv-card .btn {
+            width: 100%;
+            background-color: var(--success-color);
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(52, 152, 219, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .testimonial-content {
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .author-info h4 {
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Airime/Data Section */
+        .airtime-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2530 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .airtime-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top right, rgba(231, 76, 60, 0.2) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .airtime-section .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .airtime-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .airtime-card {
+            background-color: rgba(255,255,255,0.1);
+            padding: 25px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.15);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .airtime-card:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .airtime-card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--uganda-yellow);
+        }
+
+        .airtime-card h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        /* Agent Locator */
+        .agent-locator {
+            padding: 80px 0;
+            background-color: #f9f9f9;
+        }
+
+        .locator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .locator-map {
+            height: 400px;
+            background-color: #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .locator-map img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .locator-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .locator-form h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2530 100%);
+            color: white;
+            padding: 80px 0 30px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            transition: all 0.3s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .footer-links i {
+            font-size: 0.9rem;
+            width: 20px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: all 0.3s;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            animation: none;
+        }
+
+        /* Back to Top Button */
+        #backToTop {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: var(--secondary-color);
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            z-index: 98;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-align: center;
+            line-height: 48px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        #backToTop:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        /* Refined Mobile Display CSS */
+
+/* Ensure header elements fit well on small screens */
+@media (max-width: 576px) {
+    header {
+        height: 55px;
+        padding: 0 10px;
+    }
+
+    .header-logo {
+        height: 40px;
+        margin-right: 8px;
+    }
+
+    .mobile-menu-btn {
+        font-size: 1.6rem;
+        padding: 6px;
+    }
+
+    .nav-links {
+        top: 55px;
+        padding: 15px 10px;
+        gap: 12px;
+    }
+
+    .nav-links a {
+        font-size: 0.95rem;
+        padding: 10px 15px;
+    }
+
+    #signOutBtn {
+        font-size: 1rem;
+        padding: 10px 15px;
+        border-radius: 6px;
+    }
+
+    /* Dropdown menus full width */
+    .dropdown-menu {
+        width: 100%;
+        left: 0 !important;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    /* Reduce padding in user-actions */
+    .user-actions {
+        gap: 10px;
+    }
+
+    /* Language toggle buttons smaller */
+    .language-toggle button {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .locator-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: all 0.3s;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .search-bar {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .search-bar .hero-categories-dropdown,
+            .search-bar input,
+            .search-bar button {
+                width: 100%;
+                min-width: unset;
+                margin-right: 0 !important;
+                margin-left: 0 !important;
+            }
+
+            .hero-categories-dropdown {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .language-toggle {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+
+            .fv-grid,
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero {
+                padding: 80px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .fv-grid,
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            /* Mobile Optimized Header with Navbar and Menu */
+
+@media (max-width: 768px) {
+    header {
+        height: 60px;
+        padding: 0 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background-color: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .header-logo {
+        height: 45px;
+        margin: 0;
+    }
+
+    /* Show mobile menu button */
+    .mobile-menu-btn {
+        display: block;
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--primary-color);
+        padding: 6px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .mobile-menu-btn:hover {
+        background-color: rgba(44, 62, 80, 0.1);
+    }
+
+    /* Hide nav links by default */
+    .nav-links {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 60px);
+        background-color: white;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px;
+        gap: 15px;
+        overflow-y: auto;
+        transition: left 0.3s ease;
+        z-index: 999;
+    }
+
+    /* Show nav links when active */
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1rem;
+        border-radius: 0;
+        color: var(--dark-color);
+        font-weight: 600;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+        background-color: rgba(231, 76, 60, 0.1);
+        color: var(--accent-color);
+    }
+
+    /* Dropdown menus full width */
+    .dropdown-menu {
+        width: 100%;
+        left: 0 !important;
+        box-shadow: none;
+        border-radius: 0;
+        padding-left: 0;
+    }
+
+    /* Sign Out Button full width */
+    #signOutBtn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #ff416c, #ff4b2b);
+        color: #fff;
+        font-weight: 700;
+        box-shadow: none;
+        text-align: center;
+        cursor: pointer;
+        border: none;
+        transition: background 0.3s ease;
+    }
+
+    #signOutBtn:hover {
+        background: linear-gradient(135deg, #ff4b2b, #ff416c);
+    }
+
+    /* User actions layout */
+    .user-actions {
+        gap: 10px;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    /* Language toggle smaller */
+    .language-toggle button {
+        padding: 6px 10px;
+        font-size: 0.85rem;
+    }
+}
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/256749499287?text=Hello%20SoKoMoja%20UG,%20I%20need%20help%20with..." class="whatsapp-float" target="_blank" aria-label="Chat with us on WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+ <header>
+    <div class="container">
+    <nav class="navbar">
+       <img src="soko moja logo-Photoroom - Copy.png" alt="SoKoMoja Logo" style="height:50px; vertical-align: middle; margin-right: 10px;">
+        
+      
+        <ul class="nav-links">
+                <li><a href="#" class="active" data-translate="Home">Home</a></li>
+                
+                <li class="dropdown" id="headerCategoriesDropdown">
+                    <a href="#" data-translate="Categories" id="headerCategoriesBtn">
+                        <span data-translate="Categories">Categories</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" id="headerCategoriesMenu">
+                        <li><a href="#grocery" data-translate="Grocery Stores">Grocery Stores</a></li>
+                        <li><a href="#specialty-food" data-translate="Specialty Food">Specialty Food</a></li>
+                        <li><a href="#fruit" data-translate="Fruit Stores">Fruit Stores</a></li>
+                        <li><a href="#kiosks" data-translate="Kiosks/Small Shops">Kiosks/Small Shops</a></li>
+                        <li><a href="#clothing" data-translate="Clothing Stores">Clothing Stores</a></li>
+                        <li><a href="#shoes" data-translate="Shoe Retailers">Shoe Retailers</a></li>
+                        <li><a href="#boutiques" data-translate="Boutiques">Boutiques</a></li>
+                        <li><a href="#electronics" data-translate="Electronics">Electronics</a></li>
+                        <li><a href="#computers" data-translate="Computer Stores">Computer Stores</a></li>
+                        <li><a href="#auto" data-translate="Automotive Parts">Automotive Parts</a></li>
+                        <li><a href="#building" data-translate="Building Materials">Building Materials</a></li>
+                        <li><a href="#furniture" data-translate="Furniture & Home">Furniture & Home</a></li>
+                        <li><a href="#florists" data-translate="Florists">Florists</a></li>
+                        <li><a href="#books" data-translate="Book Retailers">Book Retailers</a></li>
+                        <li><a href="#beauty" data-translate="Beauty Supplies">Beauty Supplies</a></li>
+                        <li><a href="#pets" data-translate="Pet Stores">Pet Stores</a></li>
+                        <li><a href="#gifts" data-translate="Gift Shops">Gift Shops</a></li>
+                        <li><a href="#homeware" data-translate="Homeware & Improvements">Homeware & Improvements</a></li>
+                        <li><a href="#sports" data-translate="Sporting Goods & Music">Sporting Goods & Music</a></li>
+                        <li><a href="#used" data-translate="Used Merchandise">Used Merchandise</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="#products" data-translate="Products">Products</a></li>
+                <li><a href="#retailers" data-translate="Retailers">Retailers</a></li>
+                <li><a href="#contact" data-translate="Contact">Contact</a></li>
+            </ul>
+            
+            <div class="user-actions">
+                <a href="#" class="icon-link" aria-label="Search"><i class="fas fa-search"></i></a>
+                <a href="#" class="icon-link" aria-label="Cart"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" class="icon-link" aria-label="Account"><i class="fas fa-user"></i></a>
+                
+                <div class="language-toggle">
+                    <button class="active" data-lang="en">EN</button>
+                    <button data-lang="lg">LG</button>
+                    <button data-lang="sw">SW</button>
+                  
+<button id="signOutBtn" class="nav-link" data-translate="Sign Out">Sign Out</button>
+                </div>
+            </div>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </div>
+</header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 data-translate="Connect with Local Retailers Across Uganda">Connect with Local Retailers Across Uganda</h1>
+            <p data-translate="Find products from retailers near you, place orders, and get them delivered to your doorstep. Supporting Ugandan businesses to Grow through digitalisation.">
+                Find products from retailers near you, place orders, and get them delivered to your doorstep. Supporting Ugandan businesses to Grow through digitalisation.
+            </p>
+            <div class="search-bar">
+                <div class="hero-categories-dropdown">
+                    <button id="heroCategoriesBtn" class="btn btn-accent" data-translate="Categories">
+                        <i class="fas fa-list"></i>
+                        <span data-translate="Categories">Categories</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul id="heroCategoriesMenu" class="dropdown-menu">
+                        <li><a href="#grocery" data-translate="Grocery Stores">Grocery Stores</a></li>
+                        <li><a href="#specialty-food" data-translate="Specialty Food">Specialty Food</a></li>
+                        <li><a href="#fruit" data-translate="Fruit Stores">Fruit Stores</a></li>
+                        <li><a href="#kiosks" data-translate="Kiosks/Small Shops">Kiosks/Small Shops</a></li>
+                        <li><a href="#clothing" data-translate="Clothing Stores">Clothing Stores</a></li>
+                        <li><a href="#shoes" data-translate="Shoe Retailers">Shoe Retailers</a></li>
+                        <li><a href="#boutiques" data-translate="Boutiques">Boutiques</a></li>
+                        <li><a href="#electronics" data-translate="Electronics">Electronics</a></li>
+                        <li><a href="#computers" data-translate="Computer Stores">Computer Stores</a></li>
+                        <li><a href="#auto" data-translate="Automotive Parts">Automotive Parts</a></li>
+                        <li><a href="#building" data-translate="Building Materials">Building Materials</a></li>
+                        <li><a href="#furniture" data-translate="Furniture & Home">Furniture & Home</a></li>
+                        <li><a href="#florists" data-translate="Florists">Florists</a></li>
+                        <li><a href="#books" data-translate="Book Retailers">Book Retailers</a></li>
+                        <li><a href="#beauty" data-translate="Beauty Supplies">Beauty Supplies</a></li>
+                        <li><a href="#pets" data-translate="Pet Stores">Pet Stores</a></li>
+                        <li><a href="#gifts" data-translate="Gift Shops">Gift Shops</a></li>
+                        <li><a href="#homeware" data-translate="Homeware & Improvements">Homeware & Improvements</a></li>
+                        <li><a href="#sports" data-translate="Sporting Goods & Music">Sporting Goods & Music</a></li>
+                        <li><a href="#used" data-translate="Used Merchandise">Used Merchandise</a></li>
+                    </ul>
+                </div>
+                <input type="text" placeholder="Search for products..." data-translate="Search for products...">
+                <button type="submit" class="btn btn-accent" data-translate="Search">
+                    <i class="fas fa-search"></i> <span data-translate="Search">Search</span>
+                </button>
+            </div>
+            <div style="margin-top: 30px; display: flex; justify-content: center; gap: 15px;">
+                <a href="#" class="btn" data-translate="For Retailers"><i class="fas fa-store"></i> <span data-translate="For Retailers">For Retailers</span></a>
+                <a href="#" class="btn btn-accent" data-translate="Shop Now"><i class="fas fa-shopping-cart"></i> <span data-translate="Shop Now">Shop Now</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title" data-translate="Why Choose SoKoMoja UG">Why Choose SoKoMoja UG</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3 data-translate="Local Retailers">Local Retailers</h3>
+                    <p data-translate="Connect with trusted retailers in your community across all Ugandan districts">Connect with trusted retailers in your community across all Ugandan districts</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3 data-translate="Mobile Money">Mobile Money</h3>
+                    <p data-translate="Secure payments via MTN, Airtel and other Ugandan mobile money services">Secure payments via MTN, Airtel and other Ugandan mobile money services</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3 data-translate="Fast Delivery">Fast Delivery</h3>
+                    <p data-translate="Kampala next-day delivery and nationwide coverage to all major towns">Kampala next-day delivery and nationwide coverage to all major towns</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 data-translate="Verified Products">Verified Products</h3>
+                    <p data-translate="Quality assurance on all products from Ugandan retailers">Quality assurance on all products from Ugandan retailers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <h2 class="section-title" data-translate="Shop by Category">Shop by Category</h2>
+            <div class="products-grid">
+                <!-- Grocery Stores -->
+                <div class="product-card" id="grocery">
+                    <div class="product-image"><img src="corusel.png" alt="Grocery Stores"></div>
+                    <div class="product-info">
+                        <h3 data-translate="Grocery Stores">Grocery Stores</h3>
+                        <div class="product-price">From UGX 2,000</div>
+                        <a href="#" class="btn btn-accent" data-translate="Shop Now">Shop Now</a>
+                    </div>
+                </div>
+                
+                <!-- Specialty Food -->
+                <div class="product-card" id="specialty-food">
+                    <div class="product-image"><img src="Fried Maize.jpg" alt="Specialty Food"></div>
+                    <div class="product-info">
+                        <h3 data-translate="Specialty Food Retailers">Specialty Food Retailers</h3>
+                        <div class="product-price">From UGX 3,000</div>
+                        <a href="#" class="btn btn-accent" data-translate="Shop Now">Shop Now</a>
+                    </div>
+                </div>
+                
+                <!-- Electronics -->
+                <div class="product-card" id="electronics">
+                    <div class="product-image"><img src="16_Ideapad_Pro_5i_Hero_Family-e1671470792489-1536x1190.jpg" alt="Electronics"></div>
+                    <div class="product-info">
+                        <h3 data-translate="Electronics Retailers">Electronics Retailers</h3>
+                        <div class="product-price">From UGX 50,000</div>
+                        <a href="#" class="btn btn-accent" data-translate="Shop Now">Shop Now</a>
+                    </div>
+                </div>
+                
+                <!-- Clothing Stores -->
+                <div class="product-card" id="clothing">
+                    <div class="product-image"><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Clothing"></div>
+                    <div class="product-info">
+                        <h3 data-translate="Clothing Stores">Clothing Stores</h3>
+                        <div class="product-price">From UGX 10,000</div>
+                        <a href="#" class="btn btn-accent" data-translate="Shop Now">Shop Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fruits & Vegetables Section -->
+    <section class="fruits-veggies">
+        <div class="container">
+            <h2 class="section-title" data-translate="Fresh Fruits & Vegetables">Fresh Fruits & Vegetables</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;" data-translate="Locally sourced fresh produce from Ugandan farmers">Locally sourced fresh produce from Ugandan farmers</p>
+            <div class="fv-grid">
+                <div class="fv-card">
+                    <div class="fv-image">
+                        <img src="avocado1.jpg" alt="Avocados">
+                    </div>
+                    <div class="fv-info">
+                        <h3 data-translate="Organic Avocados (1kg)">Organic Avocados (1kg)</h3>
+                        <div class="fv-price">UGX 15,000</div>
+                        <a href="#" class="btn" data-translate="Add to Cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="fv-card">
+                    <div class="fv-image">
+                        <img src="matooke.jpg" alt="Matooke">
+                    </div>
+                    <div class="fv-info">
+                        <h3 data-translate="Matooke (Bunch)">Matooke (Bunch)</h3>
+                        <div class="fv-price">UGX 8,000</div>
+                        <a href="#" class="btn" data-translate="Add to Cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="fv-card">
+                    <div class="fv-image">
+                        <img src="passion_fruits_in_a_basket_isoalated_on_a_white_back_g-removebg-preview.jpg" alt="Passion Fruit">
+                    </div>
+                    <div class="fv-info">
+                        <h3 data-translate="Passion Fruit (1kg)">Passion Fruit (1kg)</h3>
+                        <div class="fv-price">UGX 7,000</div>
+                        <a href="#" class="btn" data-translate="Add to Cart">Add to Cart</a>
+                    </div>
+                </div>
+                <div class="fv-card">
+                    <div class="fv-image">
+                        <img src="cassava2 n potatoe.jpg" alt="Cassava & Potatoes">
+                    </div>
+                    <div class="fv-info">
+                        <h3 data-translate="Cassava & Potatoes (1kg)">Cassava & Potatoes (1kg)</h3>
+                        <div class="fv-price">UGX 5,000</div>
+                        <a href="#" class="btn" data-translate="Add to Cart">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="btn" style="background-color: var(--success-color);" data-translate="View All Fresh Produce">View All Fresh Produce</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title" data-translate="What Ugandans Are Saying">What Ugandans Are Saying</h2>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-translate="SoKoMoja helped my shop in Kampala reach customers across Uganda. Our sales have increased by 40% since joining the platform.">SoKoMoja helped my shop in Kampala reach customers across Uganda. Our sales have increased by 40% since joining the platform.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="RETAILHUB11.png" alt="Hajati Madina K">
+                        <div class="author-info">
+                            <h4>Hajati Madina K</h4>
+                            <p>Electronics Shop Owner, Kampala</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-translate="As a customer in Gulu, I can now access products from Kampala retailers without traveling. The delivery is reliable and prices are fair.">As a customer in Gulu, I can now access products from Kampala retailers without traveling. The delivery is reliable and prices are fair.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="RETAILHUB3.png" alt="Sarah">
+                        <div class="author-info">
+                            <h4>Sarah Nakato</h4>
+                            <p>Customer, Gulu</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p data-translate="The mobile money integration makes transactions so easy. I can order and pay without needing a bank account or credit card.">The mobile money integration makes transactions so easy. I can order and pay without needing a bank account or credit card.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <img src="OCeng Lira.jpg" alt="David">
+                        <div class="author-info">
+                            <h4>David Ocen</h4>
+                            <p>Small Business Owner, Lira</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Airtime/Data & Yaka Section -->
+    <section class="airtime-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white;" data-translate="Buy Airtime, Mobile Data & Pay Yaka">Buy Airtime, Mobile Data & Pay Yaka</h2>
+            <p style="max-width: 700px; margin: 0 auto 30px;" data-translate="Top up your phone, buy data bundles, or pay your UMEME Yaka electricity bills instantly with Mobile Money">
+                Top up your phone, buy data bundles, or pay your UMEME Yaka electricity bills instantly with Mobile Money
+            </p>
+            <div class="airtime-cards">
+                <div class="airtime-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3 data-translate="Airtime">Airtime</h3>
+                    <p data-translate="Instant top-up for your MTN and Airtel line">Instant top-up for your MTN and Airtel line</p>
+                </div>
+                <div class="airtime-card">
+                    <i class="fas fa-wifi"></i>
+                    <h3 data-translate="Data">Data</h3>
+                    <p data-translate="Daily, weekly and monthly bundles">Daily, weekly and monthly bundles</p>
+                </div>
+                <div class="airtime-card">
+                    <i class="fas fa-sim-card"></i>
+                    <h3 data-translate="Africell Bundles">Bundles</h3>
+                    <p data-translate="Affordable data and airtime">Affordable data and airtime</p>
+                </div>
+                <div class="airtime-card">
+                    <i class="fas fa-bolt"></i>
+                    <h3 data-translate="Yaka (UMEME)">Yaka (UMEME)</h3>
+                    <p data-translate="Pay your electricity bill or buy Yaka tokens instantly">Pay your electricity bill or buy Yaka tokens instantly</p>
+                </div>
+            </div>
+            <a href="#" class="btn" style="margin-top: 30px; background-color: var(--uganda-yellow); color: var(--uganda-red);" data-translate="Buy Now / Pay Yaka">
+                <i class="fas fa-bolt"></i> <span data-translate="Buy Now / Pay Yaka">Buy Now / Pay Yaka</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Agent Locator -->
+    <section class="agent-locator">
+        <div class="container">
+            <h2 class="section-title" data-translate="Find a SoKoMoja Agent Near You">Find a SoKoMoja Agent Near You</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 30px;" data-translate="Pay cash at our authorized agents across Uganda, especially in rural areas">Pay cash at our authorized agents across Uganda, especially in rural areas</p>
+            
+            <div class="locator-container">
+                <div class="locator-map">
+                    <img src="Sokomoja UG Connection_simple_compose (6).png" alt="Uganda Map">
+                    <div style="position: absolute; top: 40px; left: 10px; background-color: white; padding: 5px 10px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+                        <i class="fas fa-map-marker-alt" style="color: var(--accent-color);"></i> <span data-translate="Your Location">Your Location</span>
+                    </div>
+                </div>
+                
+                <div class="locator-form">
+                    <h3 data-translate="Find Nearest Agent">Find Nearest Agent</h3>
+                    <div class="form-group">
+                        <label for="agent-district" data-translate="District">District</label>
+                        <select id="agent-district">
+                            <option value="">Select District</option>
+                            <option value="kampala">Kampala</option>
+                            <option value="wakiso">Wakiso</option>
+                            <option value="mukono">Mukono</option>
+                            <option value="jinja">Jinja</option>
+                            <option value="mbale">Mbale</option>
+                            <option value="mbarara">Mbarara</option>
+                            <option value="gulu">Gulu</option>
+                            <option value="arua">Arua</option>
+                            <option value="fortportal">Fort Portal</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="agent-town" data-translate="Town/Subcounty">Town/Subcounty</label>
+                        <input type="text" id="agent-town" placeholder="Enter your town" data-translate="Enter your town">
+                    </div>
+                    <button class="btn btn-accent" style="width: 100%;" data-translate="Search Agents">
+                        <i class="fas fa-search"></i> <span data-translate="Search Agents">Search Agents</span>
+                    </button>
+                    
+                    <div class="agent-services" style="margin-top: 30px; text-align: left;">
+                        <h4 style="margin-bottom: 10px; font-size: 1.1rem; color: var(--primary-color);" data-translate="Agent Services:">Agent Services:</h4>
+                        <ul style="list-style: disc inside; padding-left: 20px;">
+                            <li data-translate="Cash payments for orders">Cash payments for orders</li>
+                            <li data-translate="Product pick-up points">Product pick-up points</li>
+                            <li data-translate="Order assistance">Order assistance</li>
+                            <li data-translate="Customer support">Customer support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- Retailer/Merchant Waitlist Signup Section -->
+    <section class="waitlist-section" style="background: #fff; padding: 80px 0;">
+        <div class="container" style="max-width: 600px; text-align: center; background: #f9f9f9; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <h2 style="color: var(--primary-color); margin-bottom: 15px;" data-translate="Join the SoKoMoja UG Waitlist">Join the SoKoMoja UG Waitlist</h2>
+            <p style="margin-bottom: 25px;" data-translate="Are you a retailer or merchant? Sign up with your phone number to join our waitlist and get early access to SoKoMoja UG merchant tools.">
+                Are you a retailer or merchant? Sign up with your phone number to join our waitlist and get early access to SoKoMoja UG merchant tools.
+            </p>
+            <form id="waitlist-form" style="display: flex; gap: 10px; justify-content: center; margin-bottom: 20px;">
+                <input type="tel" id="waitlist-phone" placeholder="Enter your phone number" required style="flex:1; padding: 12px; border-radius: 4px; border: 1px solid #ddd; font-size: 1rem;">
+                <button type="submit" class="btn btn-accent" style="padding: 12px 30px;" data-translate="Join Waitlist">Join Waitlist</button>
+            </form>
+            <div id="waitlist-message" style="margin-top: 15px; color: var(--success-color); display: none; font-weight: 600;">
+                <i class="fas fa-check-circle"></i> <span data-translate="Thank you for joining the waitlist! We'll contact you soon.">Thank you for joining the waitlist! We'll contact you soon.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>SoKoMoja UG</h3>
+                    <p style="color: rgba(255,255,255,0.8);">Connecting retailers with consumers across Uganda. Find products near you and get them delivered to your doorstep.</p>
+                    <div style="margin-top: 15px;">
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-facebook"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: white; margin-right: 15px; font-size: 1.2rem;"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-translate="Quick Links">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-translate="Home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#" data-translate="Products"><i class="fas fa-chevron-right"></i> Products</a></li>
+                        <li><a href="#" data-translate="Retailers"><i class="fas fa-chevron-right"></i> Retailers</a></li>
+                        <li><a href="#" data-translate="About Us"><i class="fas fa-chevron-right"></i> About Us</a></li>
+                        <li><a href="#" data-translate="Contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                        <li><a href="#" data-translate="FAQ"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-translate="Categories">Categories</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" data-translate="Electronics"><i class="fas fa-chevron-right"></i> Electronics</a></li>
+                        <li><a href="#" data-translate="Groceries"><i class="fas fa-chevron-right"></i> Groceries</a></li>
+                        <li><a href="#" data-translate="Clothing"><i class="fas fa-chevron-right"></i> Clothing</a></li>
+                        <li><a href="#" data-translate="Home & Garden"><i class="fas fa-chevron-right"></i> Home & Garden</a></li>
+                        <li><a href="#" data-translate="Fruits & Vegetables"><i class="fas fa-chevron-right"></i> Fruits & Vegetables</a></li>
+                        <li><a href="#" data-translate="Airtime/Data"><i class="fas fa-chevron-right"></i> Airtime/Data</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 data-translate="Contact Us">Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-map-marker-alt"></i> <span data-translate="Plot 12, Kampala Road, Kampala">Plot 12, Kampala Road, Kampala</span></a></li>
+                        <li><a href="tel:+256749499287"><i class="fas fa-phone"></i> +256 749 499287</a></li>
+                        <li><a href="mailto:info@sokomoja.ug"><i class="fas fa-envelope"></i> info@sokomojaug.com</a></li>
+                        <li><i class="fas fa-clock"></i> <span data-translate="Mon-Fri: 8AM - 6PM">Mon-Fri: 8AM - 6PM</span></li>
+                        <li><i class="fas fa-clock"></i> <span data-translate="Sat: 9AM - 4PM">Sat: 9AM - 4PM</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 SoKoMoja UG LTD. <span data-translate="All Rights Reserved">All Rights Reserved </span>. - Regulate by BOU | BGA</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+         // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+
+        // Dropdown functionality
+        const dropdowns = document.querySelectorAll('.dropdown');
+        
+        dropdowns.forEach(dropdown => {
+            dropdown.addEventListener('mouseenter', () => {
+                if (window.innerWidth > 768) {
+                    dropdown.querySelector('.dropdown-menu').classList.add('show');
+                }
+            });
+            
+            dropdown.addEventListener('mouseleave', () => {
+                if (window.innerWidth > 768) {
+                    dropdown.querySelector('.dropdown-menu').classList.remove('show');
+                }
+            });
+            
+            dropdown.querySelector('a').addEventListener('click', (e) => {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    dropdown.querySelector('.dropdown-menu').classList.toggle('show');
+                }
+            });
+        });
+
+        // Categories dropdown functionality (for both header and hero)
+        const categoriesBtns = document.querySelectorAll('#heroCategoriesBtn, #headerCategoriesBtn');
+        
+        categoriesBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const menuId = this.id === 'heroCategoriesBtn' ? 'heroCategoriesMenu' : 'headerCategoriesMenu';
+                document.getElementById(menuId).classList.toggle('show');
+                
+                // Close other dropdowns if open
+                if (menuId === 'heroCategoriesMenu' && document.getElementById('headerCategoriesMenu').classList.contains('show')) {
+                    document.getElementById('headerCategoriesMenu').classList.remove('show');
+                } else if (menuId === 'headerCategoriesMenu' && document.getElementById('heroCategoriesMenu').classList.contains('show')) {
+                    document.getElementById('heroCategoriesMenu').classList.remove('show');
+                }
+            });
+        });
+       
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            // For mobile menu
+            if (!e.target.closest('.dropdown') && window.innerWidth <= 768) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            }
+            
+            // For categories dropdowns
+            if (!e.target.closest('#heroCategoriesBtn') && !e.target.closest('#heroCategoriesMenu')) {
+                document.getElementById('heroCategoriesMenu').classList.remove('show');
+            }
+            if (!e.target.closest('#headerCategoriesBtn') && !e.target.closest('#headerCategoriesMenu')) {
+                document.getElementById('headerCategoriesMenu').classList.remove('show');
+            }
+        });
+
+        // Back to top button
+        const backToTopBtn = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+       // Waitlist form submission
+        const waitlistForm = document.getElementById('waitlist-form');
+        const waitlistMessage = document.getElementById('waitlist-message');
+        
+        if (waitlistForm) {
+            waitlistForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const phone = document.getElementById('waitlist-phone').value;
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    waitlistMessage.style.display = 'block';
+                    waitlistForm.reset();
+                    
+                    // Hide message after 5 seconds
+                    setTimeout(() => {
+                        waitlistMessage.style.display = 'none';
+                    }, 5000);
+                }, 1000);
+            });
+        }
+        // Translation dictionaries for EN, LG, SW
+        const translations = {
+            en: {
+                // Navigation
+                "Home": "Home",
+                "Categories": "Categories",
+                "Products": "Products",
+                "Retailers": "Retailers",
+                "About Us": "About Us",
+                "Contact": "Contact",
+                
+                // Hero
+                "Connect with Local Retailers Across Uganda": "Connect with Local Retailers Across Uganda",
+                "Find products from retailers near you, place orders, and get them delivered to your doorstep. Supporting Ugandan businessesto Grow through digitalisation.": "Find products from retailers near you, place orders, and get them delivered to your doorstep. Supporting Ugandan businesses to Grow through digitalisation.",
+                "Search for products...": "Search for products...",
+                "Search": "Search",
+                "For Retailers": "For Retailers",
+                "Shop Now": "Shop Now",
+                
+                // Features
+                "Why Choose SoKoMoja UG": "Why Choose SoKoMoja UG",
+                "Local Retailers": "Local Retailers",
+                "Connect with trusted retailers in your community across all Ugandan districts": "Connect with trusted retailers in your community across all Ugandan districts",
+                "Mobile Money": "Mobile Money",
+                "Secure payments via MTN, Airtel and other Ugandan mobile money services": "Secure payments via MTN, Airtel and other Ugandan mobile money services",
+                "Fast Delivery": "Fast Delivery",
+                "Kampala next-day delivery and nationwide coverage to all major towns": "Kampala next-day delivery and nationwide coverage to all major towns",
+                "Verified Products": "Verified Products",
+                "Quality assurance on all products from Ugandan retailers": "Quality assurance on all products from Ugandan retailers",
+                
+                // Products
+                "Shop by Category": "Shop by Category",
+                "Grocery Stores": "Grocery Stores",
+                "Specialty Food Retailers": "Specialty Food Retailers",
+                "Electronics Retailers": "Electronics Retailers",
+                "Clothing Stores": "Clothing Stores",
+                "From UGX": "From UGX",
+                
+                // Fruits & Vegetables
+                "Fresh Fruits & Vegetables": "Fresh Fruits & Vegetables",
+                "Locally sourced fresh produce from Ugandan farmers": "Locally sourced fresh produce from Ugandan farmers",
+                "Organic Avocados (1kg)": "Organic Avocados (1kg)",
+                "Matooke (Bunch)": "Matooke (Bunch)",
+                "Passion Fruit (1kg)": "Passion Fruit (1kg)",
+                "Cassava & Potatoes (1kg)": "Cassava & Potatoes (1kg)",
+                "Add to Cart": "Add to Cart",
+                "View All Fresh Produce": "View All Fresh Produce",
+                
+                // Testimonials
+                "What Ugandans Are Saying": "What Ugandans Are Saying",
+                "SoKoMoja helped my shop in Kampala reach customers across Uganda. Our sales have increased by 40% since joining the platform.": "SoKoMoja helped my shop in Kampala reach customers across Uganda. Our sales have increased by 40% since joining the platform.",
+                "As a customer in Gulu, I can now access products from Kampala retailers without traveling. The delivery is reliable and prices are fair.": "As a customer in Gulu, I can now access products from Kampala retailers without traveling. The delivery is reliable and prices are fair.",
+                "The mobile money integration makes transactions so easy. I can order and pay without needing a bank account or credit card.": "The mobile money integration makes transactions so easy. I can order and pay without needing a bank account or credit card.",
+                
+                // Airtime
+                "Buy Airtime, Mobile Data & Pay Yaka": "Buy Airtime, Mobile Data & Pay Yaka",
+                "Top up your phone, buy data bundles, or pay your UMEME Yaka electricity bills instantly with Mobile Money": "Top up your phone, buy data bundles, or pay your UMEME Yaka electricity bills instantly with Mobile Money",
+                "MTN Airtime": "MTN Airtime",
+                "Instant top-up for your MTN line": "Instant top-up for your MTN line",
+                "Airtel Data": "Airtel Data",
+                "Daily, weekly and monthly bundles": "Daily, weekly and monthly bundles",
+                "Bundles": "Bundles",
+                "Affordable data and airtime": "Affordable data and airtime",
+                "Yaka (UMEME)": "Yaka (UMEME)",
+                "Pay your electricity bill or buy Yaka tokens instantly": "Pay your electricity bill or buy Yaka tokens instantly",
+                "Buy Now / Pay Yaka": "Buy Now / Pay Yaka",
+                
+                // Agent Locator
+                "Find a SoKoMoja Agent Near You": "Find a SoKoMoja Agent Near You",
+                "Pay cash at our authorized agents across Uganda, especially in rural areas": "Pay cash at our authorized agents across Uganda, especially in rural areas",
+                "Find Nearest Agent": "Find Nearest Agent",
+                "District": "District",
+                "Town/Subcounty": "Town/Subcounty",
+                "Enter your town": "Enter your town",
+                "Search Agents": "Search Agents",
+                "Agent Services:": "Agent Services:",
+                "Cash payments for orders": "Cash payments for orders",
+                "Product pick-up points": "Product pick-up points",
+                "Order assistance": "Order assistance",
+                "Customer support": "Customer support",
+                "Your Location": "Your Location",
+                
+                // Waitlist
+                "Join the SoKoMoja UG Waitlist": "Join the SoKoMoja UG Waitlist",
+                "Are you a retailer or merchant? Sign up with your phone number to join our waitlist and get early access to SoKoMoja UG merchant tools.": "Are you a retailer or merchant? Sign up with your phone number to join our waitlist and get early access to SoKoMoja UG merchant tools.",
+                "Enter your phone number": "Enter your phone number",
+                "Join Waitlist": "Join Waitlist",
+                "Thank you for joining the waitlist! We'll contact you soon.": "Thank you for joining the waitlist! We'll contact you soon.",
+                
+                // Footer
+                "Quick Links": "Quick Links",
+                "Home": "Home",
+                "Products": "Products",
+                "Retailers": "Retailers",
+                "About Us": "About Us",
+                "Contact": "Contact",
+                "FAQ": "FAQ",
+                "Categories": "Categories",
+                "Electronics": "Electronics",
+                "Groceries": "Groceries",
+                "Clothing": "Clothing",
+                "Home & Garden": "Home & Garden",
+                "Fruits & Vegetables": "Fruits & Vegetables",
+                "Airtime/Data": "Airtime/Data",
+                "Contact Us": "Contact Us",
+                "Plot 12, Kampala Road, Kampala": "Plot 12, Kampala Road, Kampala",
+                "Mon-Fri: 8AM - 6PM": "Mon-Fri: 8AM - 6PM",
+                "Sat: 9AM - 4PM": "Sat: 9AM - 4PM",
+                "All Rights Reserved": "All Rights Reserved"
+                
+            },
+            lg: {
+                // Luganda Translations
+                "Home": "Awaka",
+                "Categories": "Ebika",
+                "Products": "Ebintu",
+                "Retailers": "Abatunda",
+                "About Us": "Ku Ffe",
+                "Contact": "Kutuukirako",
+                
+                // Hero
+                "Connect with Local Retailers Across Uganda": "Yungako n'abatunda mu Uganda yonna",
+                "Find products from retailers near you, place orders, and get them delivered to your doorstep. Supporting Ugandan businesses to Grow through digitalisation.": "Noonya ebintu okuva mu batunda abali okumpi naawe, oteeka oda, era obifunamu ku luggya lw'oluggya lwo. Okuyamba bizinesi mu Uganda okukula nga zikozesa tekinologiya.",
+
+                "Search for products...": "Noonya ebintu...",
+                "Search": "Noonya",
+                "For Retailers": "Ku Batunda",
+                "Shop Now": "Gula Kaakano",
+                
+                // Features
+                "Why Choose SoKoMoja UG": "Lwaki Okulonda SoKoMoja UG",
+                "Local Retailers": "Abatunda Ab'omu Kitundu",
+                "Connect with trusted retailers in your community across all Ugandan districts": "Yungako n'abatunda abesigika mu kitundu kyo mu distulikiti zonna za Uganda",
+                "Mobile Money": "Ssente ku Simu",
+                "Secure payments via MTN, Airtel and other Ugandan mobile money services": "Okasasula okwesigika ku MTN, Airtel n'endala",
+                "Fast Delivery": "Okutuusa ebintu mangu",
+                "Kampala next-day delivery and nationwide coverage to all major towns": "Mu Kampala obifuna olunaku oluddako, n'okutuusa mu bitundu byonna",
+                "Verified Products": "Ebintu eby'okwesiga",
+                "Quality assurance on all products from Ugandan retailers": "Ebitundibwa mu Uganda ebirina omutindo ogw'amaanyi",
+                
+                // Products
+                "Shop by Category": "Gula mu Bika",
+                "Grocery Stores": "ebintu by'omu dduuka",
+                "Specialty Food Retailers": "Abatunda Emmere Enjawulo",
+                "Electronics Retailers": "Abatunda Ebizimbibwa",
+                "Clothing Stores": "Edduuka ly'Engoye",
+                "From UGX": "Okuva ku UGX",
+                
+                // Fruits & Vegetables
+                "Fresh Fruits & Vegetables": "Ebibala n'Ennimiro Ebipya",
+                "Locally sourced fresh produce from Ugandan farmers": "Ebibala n'ennimiro eby'omuwendo okuva mu balimi ba Uganda",
+                "Organic Avocados (1kg)": "Avokaado Ezitalina Kemikali (1kg)",
+                "Matooke (Bunch)": "Matooke (Kisada)",
+                "Passion Fruit (1kg)": "Passion Fruit (1kg)",
+                "Cassava & Potatoes (1kg)": "Muwoogo n'Biyamusi (1kg)",
+                "Add to Cart": "Gattako ku Gaadi",
+                "View All Fresh Produce": "Laba Ebintu Ebipya Byonna",
+                
+                // Testimonials
+                "What Ugandans Are Saying": "Abantu ba Uganda Bagamba Ki",
+                "SoKoMoja helped my shop in Kampala reach customers across Uganda. Our sales have increased by 40% since joining the platform.": "SoKoMoja yannyamba edduuka lyanze mu Kampala okutuuka ku bakuluntuzi mu Uganda yonna. Okutunda kwaffe kweyongera ku 40% okuva lwe nnatandika kukozesa pulatifomu eno.",
+                "As a customer in Gulu, I can now access products from Kampala retailers without traveling. The delivery is reliable and prices are fair.": "Nze nga ndi mukuluntuzi mu Gulu, nsobola okufuna ebintu okuva mu batunda ba Kampala nga sigenda kukyeto. Ebintu bituusibwa bulungi era ebibadde bimu.",
+                "The mobile money integration makes transactions so easy. I can order and pay without needing a bank account or credit card.": "Okukozesa ssente ku simu kufuula okukola ebintu mulungi. Nsobola kuteeka oda n'okasasula nga sikyetaaga akaunti ya banki oba kaadi.",
+                
+                // Airtime
+                "Buy Airtime, Mobile Data & Pay Yaka": "Gula Airtime ku Simu, Data, Sasula Yaka",
+                "Top up your phone, buy data bundles, or pay your UMEME Yaka electricity bills instantly with Mobile Money": "Jjuza simu yo, gula data, oba sasula bili ya UMEME Yaka kaakano ku mobile money",
+                "Airtime": "Sente ku Simu Yo",
+                "Instant top-up for your line": "Okujjuza simu yo kaakano",
+                "Data": "Data wa MTN ne Airtel",
+                "Daily, weekly and monthly bundles": "Ebifunze eby'olunaku, eby'olwiiki n'eby'omwezi",
+                "Bundles": "Ebifunze bya Data",
+                "Affordable data and airtime": "Data n'essente ku simu ezigula mu kifo ky'omuwendo",
+                "Yaka (UMEME)": "Yaka (UMEME)",
+                "Pay your electricity bill or buy Yaka tokens instantly": "Kasa bili ya amasannyalaze oba gula tokeni za Yaka kaakano",
+                "Buy Now / Pay Yaka": "Gula Kaakano / Kasa Yaka",
+                
+                // Agent Locator
+                "Find a SoKoMoja Agent Near You": "Noonya Agent wa SoKoMoja Okumpi naawe",
+                "Pay cash at our authorized agents across Uganda, especially in rural areas": "Kasa ssente ku ba agent baffe abakkirizibwa mu Uganda yonna, naddala mu bitundu ebiriraanye",
+                "Find Nearest Agent": "Noonya Agent Okumpi",
+                "District": "Disitulikiti",
+                "Town/Subcounty": "Taawuni / Ssaza",
+                "Enter your town": "Wandika ekibuga kyo",
+                "Search Agents": "Noonya Ba Agent",
+                "Agent Services:": "Eby'okukola ku Agent:",
+                "Cash payments for orders": "Okasasula ku oda ku ssente",
+                "Product pick-up points": "Ebifo by'okufunamu ebintu",
+                "Order assistance": "Okuyamba mu kuteeka oda",
+                "Customer support": "Okuyamba bakuluntuzi",
+                "Your Location": "Ekitundu Kyo",
+                
+                               // Waitlist
+                "Join the SoKoMoja UG Waitlist": "olukalala lw'abantu abalindiridde lwa SoKoMoja UG",
+                "Are you a retailer or merchant? Sign up with your phone number to join our waitlist and get early access to SoKoMoja UG merchant tools.": "Oli mutuuzi oba mubazzi? Wandika namba yo ey'essimu okwegatta ku lululu lwaffe era okufuna obuyinza okukozesa ebikolwa bya SoKoMoja UG obwangu.",
+                "Enter your phone number": "Wandika namba yo ey'essimu",
+                "Join Waitlist": "Wegatte Ku Lukalala",
+                "Thank you for joining the waitlist! We'll contact you soon.": "Webale okwegatta ku lukalala! Tujja kukubuulira obwangu.",
+                
+                // Footer
+                "Quick Links": "Ebiyingizo Ebyangu",
+                "Home": "Awaka",
+                "Products": "Ebintu",
+                "Retailers": "Abatunda",
+                "About Us": "Ku Ffe",
+                "Contact": "Kutuukirako",
+                "FAQ": "Ebiyinzizo",
+                "Categories": "Ebika",
+                "Electronics": "Ebizimbibwa",
+                "Groceries": "Amadduuka ge Byokozesa",
+                "Clothing": "Engoye",
+                "Home & Garden": "Ewaka n'byobulimi",
+                "Fruits & Vegetables": "Ebibala n'Enbyenimiro",
+                "Airtime/Data": "Essimu/Data",
+                "Contact Us": "Tukwatagane",
+                "Plot 12, Kampala Road, Kampala": "Puloti 12, Kampala Road, Kampala",
+                "Mon-Fri: 8AM - 6PM": "Balaza-Lwakutano: 8AM - 6PM",
+                "Sat: 9AM - 4PM": "Lwamukaga: 9AM - 4PM",
+                "All Rights Reserved": "Eddembe lyonna liri mu buyinza bwaffe"
+            },
+            sw: {
+                // Swahili Translations
+                "Home": "Nyumbani",
+                "Categories": "Kategoria",
+                "Products": "Bidhaa",
+                "Retailers": "Wauzaji",
+                "About Us": "Kuhusu Sisi",
+                "Contact": "Mawasiliano",
+                
+                // Hero
+                "Connect with Local Retailers Across Uganda": "Ungana na Wauzaji wa Mitaani Kote Uganda",
+                "Find products from retailers near you, place orders, and get them delivered to your doorstep. Supporting Ugandan businesses since 2020.": "Pata bidhaa kutoka kwa wauzaji karibu nawe, weka maagizo, na upokee kwenye mlango wako. Kuunga mkono biashara za Uganda tangu 2020.",
+                "Search for products...": "Tafuta bidhaa...",
+                "Search": "Tafuta",
+                "For Retailers": "Kwa Wauzaji",
+                "Shop Now": "Nunua Sasa",
+                
+                // Features
+                "Why Choose SoKoMoja UG": "Kwa Nini Kuchagua SoKoMoja UG",
+                "Local Retailers": "Wauzaji wa Mitaani",
+                "Connect with trusted retailers in your community across all Ugandan districts": "Ungana na wauzaji wa kuaminika katika jamii yako katika wilaya zote za Uganda",
+                "Mobile Money": "Pesa ya Mkononi",
+                "Secure payments via MTN, Airtel and other Ugandan mobile money services": "Malipo salama kupitia MTN, Airtel na huduma zingine za pesa ya mkononi za Uganda",
+                "Fast Delivery": "Uwasilishaji wa Haraka",
+                "Kampala next-day delivery and nationwide coverage to all major towns": "Uwasilishaji wa siku inayofuata Kampala na upatikanaji kitaifa kwa miji mikubwa",
+                "Verified Products": "Bidhaa Zilizothibitishwa",
+                "Quality assurance on all products from Ugandan retailers": "Uhakikisho wa ubora kwa bidhaa zote kutoka kwa wauzaji wa Uganda",
+                
+                // Products
+                "Shop by Category": "Nunua kwa Kategoria",
+                "Grocery Stores": "Maduka ya Vyakula",
+                "Specialty Food Retailers": "Wauzaji wa Vyakula Maalum",
+                "Electronics Retailers": "Wauzaji wa Vifaa vya Umeme",
+                "Clothing Stores": "Maduka ya Nguo",
+                "From UGX": "Kuanzia UGX",
+                
+                // Fruits & Vegetables
+                "Fresh Fruits & Vegetables": "Matunda na Mboga Mbichi",
+                "Locally sourced fresh produce from Ugandan farmers": "Bidhaa mbichi za mitaani kutoka kwa wakulima wa Uganda",
+                "Organic Avocados (1kg)": "Parachichi za Kiorganiki (1kg)",
+                "Matooke (Bunch)": "Ndizi za Matooke (Kichane)",
+                "Passion Fruit (1kg)": "Matunda ya Passion (1kg)",
+                "Cassava & Potatoes (1kg)": "Mihogo na Viazi (1kg)",
+                "Add to Cart": "Ongeza kwa Cart",
+                "View All Fresh Produce": "Tazama Bidhaa Zote Mbichi",
+                
+                // Testimonials
+                "What Ugandans Are Saying": "Wanachi wa Uganda Wanasema Nini",
+                "SoKoMoja helped my shop in Kampala reach customers across Uganda. Our sales have increased by 40% since joining the platform.": "SoKoMoja ilinisaidia duka langu Kampala kufikia wateja kote Uganda. Mauzo yetu yameongezeka kwa 40% tangu kujiunga na jukwaa hili.",
+                "As a customer in Gulu, I can now access products from Kampala retailers without traveling. The delivery is reliable and prices are fair.": "Kama mteja wa Gulu, sasa naweza kupata bidhaa kutoka kwa wauzaji wa Kampala bila kusafiri. Uwasilishaji ni wa kuaminika na bei ni nzuri.",
+                "The mobile money integration makes transactions so easy. I can order and pay without needing a bank account or credit card.": "Ujumuishaji wa pesa ya mkononi unafanya miamala iwe rahisi. Naweza kuagiza na kulipa bila kuhitaji akaunti ya benki au kadi ya mkopo.",
+                
+                // Airtime
+                "Buy Airtime, Mobile Data & Pay Yaka": "Nunua Airtime, Data ya Mkononi na Lipa Yaka",
+                "Top up your phone, buy data bundles, or pay your UMEME Yaka electricity bills instantly with Mobile Money": "Jaza simu yako, nunua vifurushi vya data, au lipa bili yako ya umeme ya UMEME Yaka mara moja kwa pesa ya mkononi",
+                "Airtime": "Airtime ya MTN na Airtel",
+                "Instant top-up for your line": "Kujaza mara moja kwa mstari wako",
+                "Data": "Data ya Airtel na MTN",
+                "Daily, weekly and monthly bundles": "Vifurushi vya kila siku, kila wiki na kila mwezi",
+                "Bundles": "Vifurushi vya Data",
+                "Affordable data and airtime": "Data na airtime ya bei nafuu",
+                "Yaka (UMEME)": "Yaka (UMEME)",
+                "Pay your electricity bill or buy Yaka tokens instantly": "Lipa bili yako ya umeme au nunua tokeni za Yaka mara moja",
+                "Buy Now / Pay Yaka": "Nunua Sasa / Lipa Yaka",
+                
+                // Agent Locator
+                "Find a SoKoMoja Agent Near You": "Tafuta Wakala wa SoKoMoja Karibu nawe",
+                "Pay cash at our authorized agents across Uganda, especially in rural areas": "Lipa pesa taslimu kwa wakala wetu walioidhinishwa kote Uganda, hasa maeneo ya vijijini",
+                "Find Nearest Agent": "Tafuta Wakala wa Karibu",
+                "District": "Wilaya",
+                "Town/Subcounty": "Mji / Kata",
+                "Enter your town": "Weka mji wako",
+                "Search Agents": "Tafuta Wakala",
+                "Agent Services:": "Huduma za Wakala:",
+                "Cash payments for orders": "Malipo ya pesa taslimu kwa maagizo",
+                "Product pick-up points": "Vituo vya kuchukua bidhaa",
+                "Order assistance": "Msaada wa kuagiza",
+                "Customer support": "Msaada kwa wateja",
+                "Your Location": "Eneo Lako",
+                
+                // Waitlist
+                "Join the SoKoMoja UG Waitlist": "Jiunge na Orodha ya Kusubiri ya SoKoMoja UG",
+                "Are you a retailer or merchant? Sign up with your phone number to join our waitlist and get early access to SoKoMoja UG merchant tools.": "Je, wewe ni muuzaji au mfanyabiashara? Jisajili kwa nambari yako ya simu kujiunga na orodha yetu ya kusubiri na kupata ufikiaji wa mapema kwa zana za wafanyabiashara za SoKoMoja UG.",
+                "Enter your phone number": "Weka nambari yako ya simu",
+                "Join Waitlist": "Jiunge na Orodha ya Kusubiri",
+                "Thank you for joining the waitlist! We'll contact you soon.": "Asante kwa kujiunga na orodha ya kusubiri! Tutawasiliana nawe hivi karibuni.",
+                
+                // Footer
+                "Quick Links": "Viungo vya Haraka",
+                "Home": "Nyumbani",
+                "Products": "Bidhaa",
+                "Retailers": "Wauzaji",
+                "About Us": "Kuhusu Sisi",
+                "Contact": "Mawasiliano",
+                "FAQ": "Maswali Yanayoulizwa Mara kwa Mara",
+                "Categories": "Kategoria",
+                "Electronics": "Vifaa vya Umeme",
+                "Groceries": "Vyakula",
+                "Clothing": "Nguo",
+                "Home & Garden": "Nyumba na Bustani",
+                "Fruits & Vegetables": "Matunda na Mboga",
+                "Airtime/Data": "Airtime/Data",
+                "Contact Us": "Wasiliana Nasi",
+                "Plot 12, Kampala Road, Kampala": "Kipande 12, Barabara ya Kampala, Kampala",
+                "Mon-Fri: 8AM - 6PM": "Jumatatu-Ijumaa: 8AM - 6PM",
+                "Sat: 9AM - 4PM": "Jumamosi: 9AM - 4PM",
+                "All Rights Reserved": "Haki Zote Zimehifadhiwa"
+            }
+        };
+   /**
+     * Sign out function: clears storage and cookies, then redirects to main index page.
+     */
+    function signOut() {
+        localStorage.clear();
+        sessionStorage.clear();
+
+        document.cookie.split(";").forEach(function(c) { 
+            document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+        });
+
+        window.location.href = 'index.html'; // Redirect to main index page
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const signOutBtn = document.getElementById('signOutBtn');
+        if (signOutBtn) {
+            signOutBtn.addEventListener('click', signOut);
+        }
+    });
+        
+
+        // Language toggle functionality
+        const langButtons = document.querySelectorAll('.language-toggle button');
+        
+        langButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                
+                // Update active button
+                langButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Translate all elements with data-translate attribute
+                document.querySelectorAll('[data-translate]').forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (translations[lang] && translations[lang][key]) {
+                        if (element.tagName === 'INPUT' || element.tagName === 'TEXTAREA') {
+                            element.placeholder = translations[lang][key];
+                        } else {
+                            element.textContent = translations[lang][key];
+                        }
+                    }
+                });
+            });
+        });
+
+        // Initialize with English
+        document.querySelector('.language-toggle button[data-lang="en"]').click();
+    </script>
+</body>
+</html>

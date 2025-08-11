@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+         <!-- Favicon -->
+    <link rel="icon" href="favicon.png" type="image/x-icon" />
+    <title>SokoMoja Uganda – Retailer Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary:#F7B500;
+            --secondary:#222;
+            --accent:#E5352B;
+            --light:#FAFAFA;
+            --dark:#1A1A1A;
+            --transition:.3s ease;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+        body{background:var(--light);color:var(--secondary);line-height:1.5}
+
+        /* ---- TOP BUTTONS ---- */
+        .home-btn{
+            position:absolute;top:20px;left:20px;z-index:200;
+            background:#fff;color:var(--primary);font-weight:600;
+            padding:8px 18px;border-radius:20px;box-shadow:0 2px 8px rgba(0,0,0,.07);
+            display:flex;align-items:center;gap:8px;text-decoration:none;transition:background .2s,color .2s;
+        }
+        .home-btn:hover{background:var(--primary);color:#fff}
+
+        /* ---- LANGUAGE SELECTOR ---- */
+        .language-selector{position:absolute;top:20px;right:20px;z-index:100}
+        .language-btn{background:#fff;border:1px solid #ddd;border-radius:20px;padding:5px 15px;cursor:pointer;display:flex;align-items:center;gap:8px}
+        .language-dropdown{position:absolute;right:0;top:40px;background:#fff;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.1);display:none;width:150px}
+        .language-dropdown a{display:block;padding:10px 15px;color:var(--secondary);text-decoration:none;transition:background .2s}
+        .language-dropdown a:hover{background:#f5f5f5}
+        .language-dropdown.show{display:block}
+
+        /* ---- LAYOUT ---- */
+        .auth-container{display:flex;min-height:100vh}
+        .auth-left{flex:1;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.5)),url('Sokomoja UG Connection_simple_compose (6).png') center/cover;display:flex;flex-direction:column;justify-content:center;padding:0 5%;color:#fff}
+        .auth-right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 10%}
+        .auth-form{max-width:400px;width:100%}
+        .auth-tabs{display:flex;margin-bottom:30px;border-bottom:1px solid #ddd}
+        .auth-tab{padding:10px 20px;cursor:pointer;font-weight:500;color:#777}
+        .auth-tab.active{color:var(--primary);border-bottom:2px solid var(--primary)}
+        .welcome-message{margin-bottom:30px}
+        .welcome-message h2{font-size:2rem;margin-bottom:10px}
+        .welcome-message p{color:#666}
+        .form-group{margin-bottom:20px}
+        .form-group label{display:block;margin-bottom:8px;font-weight:500}
+        .form-group input{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:8px;font-size:1rem;transition:border .2s,box-shadow .2s}
+        .form-group input:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(247,181,0,.2)}
+        .auth-btn{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:500;cursor:pointer;transition:background .2s}
+        .auth-btn:hover{background:#e0a800}
+        .auth-footer{margin-top:20px;text-align:center;color:#666}
+        .auth-footer a{color:var(--primary);text-decoration:none;font-weight:500}
+
+        /* ---- CAROUSEL ---- */
+        .info-section{padding:60px 10%;background:#fff}
+        .info-header{max-width:800px;margin:0 auto 40px;text-align:center}
+        .info-header h2{font-size:2rem;margin-bottom:15px}
+        .info-header p{color:#666;line-height:1.6}
+        .carousel{max-width:1000px;margin:0 auto;border-radius:12px;overflow:hidden;position:relative;box-shadow:0 8px 24px rgba(0,0,0,.1)}
+        .carousel-inner{display:flex;transition:transform .5s ease}
+        .carousel-item{min-width:100%;position:relative}
+        .carousel-item img{width:100%;height:400px;object-fit:cover}
+        .carousel-caption{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;padding:20px}
+        .carousel-controls{position:absolute;top:50%;left:0;right:0;display:flex;justify-content:space-between;padding:0 20px;transform:translateY(-50%)}
+        .carousel-control{background:rgba(255,255,255,.7);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s}
+        .carousel-control:hover{background:#fff}
+        .carousel-indicators{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:10px}
+        .carousel-indicator{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.5);cursor:pointer;transition:background .2s,transform .2s}
+        .carousel-indicator.active{background:#fff;transform:scale(1.2)}
+
+        /* ---- CTA ---- */
+        .cta-section{padding:40px 10%;text-align:center}
+        .cta-btn.primary-minimal{background:var(--primary);color:#222;border:none;border-radius:6px;padding:14px 32px;font-size:1.1rem;font-weight:600;display:inline-flex;align-items:center;gap:10px;text-decoration:none;transition:background .18s,color .18s,box-shadow .18s}
+        .cta-btn.primary-minimal:hover{background:#e0a800;color:#111;box-shadow:0 2px 12px rgba(247,181,0,.1)}
+
+        /* ---- MOBILE OPTIMISATION ---- */
+        @media(max-width:480px){
+            .home-btn{font-size:.8rem;padding:6px 12px;top:10px;left:10px}
+            .language-btn{font-size:.8rem;padding:4px 10px}
+            .auth-container{flex-direction:column}
+            .auth-left{padding:40px 5%;text-align:center}
+            .auth-right{padding:40px 5%}
+            .welcome-message h2{font-size:1.6rem}
+            .carousel-item img{height:220px}
+            .carousel-control{width:34px;height:34px;font-size:.9rem}
+            .cta-btn.primary-minimal{padding:12px 24px;font-size:1rem}
+        }
+    </style>
+</head>
+<body>
+
+<!-- Home / Back -->
+<a href="index.html" class="home-btn"><i class="fas fa-arrow-left"></i> Home</a>
+
+<!-- Language picker -->
+<div class="language-selector">
+    <button class="language-btn" id="languageBtn">
+        <i class="fas fa-globe"></i><span>English</span><i class="fas fa-chevron-down"></i>
+    </button>
+    <div class="language-dropdown" id="languageDropdown">
+        <a href="#" data-lang="en">English</a>
+        <a href="#" data-lang="sw">Swahili</a>
+        <a href="#" data-lang="lg">Luganda</a>
+    </div>
+</div>
+
+<!-- Main split layout -->
+<div class="auth-container">
+    <!-- Left -->
+    <div class="auth-left">
+        <h1>Retailer Portal</h1>
+        <p>Manage your online store, track orders, and connect with customers across Uganda</p>
+    </div>
+
+    <!-- Right -->
+    <div class="auth-right">
+        <div class="auth-form">
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="retailer">Retailer</div>
+                <div class="auth-tab" data-tab="user">User</div>
+            </div>
+
+            <!-- Retailer Login -->
+            <div class="auth-content" id="retailerAuth">
+                <div class="welcome-message">
+                    <h2>👋 Hi Merchant, Welcome!</h2>
+                </div>
+                <form class="demoForm" data-role="retailer">
+                    <div class="form-group">
+                        <label>Email or Phone</label>
+                        <input type="text" placeholder="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Log in</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="#" class="switch" data-to="retailerRegister">Register</a></p>
+                </div>
+            </div>
+
+            <!-- Retailer Register -->
+            <div class="auth-content" id="retailerRegister" style="display:none">
+                <div class="welcome-message">
+                    <h2>Enhance Your Brand with RetailHub UG</h2>
+                </div>
+                <form>
+                    <div class="form-group"><label>Business Name</label><input required></div>
+                    <div class="form-group"><label>Email</label><input type="email" required></div>
+                    <div class="form-group"><label>Phone</label><input type="tel" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" required></div>
+                    <button type="submit" class="auth-btn">Register Business</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" class="switch" data-to="retailerAuth">Log in</a></p>
+                </div>
+            </div>
+
+            <!-- User Login -->
+            <div class="auth-content" id="userAuth" style="display:none">
+                <div class="welcome-message">
+                    <h2>Welcome to SokoMoja UG Community!</h2>
+                </div>
+                <form class="demoForm" data-role="user">
+                    <div class="form-group">
+                        <label>Email or Phone</label>
+                        <input type="text" placeholder="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Log in</button>
+                </form>
+                <div class="auth-footer">
+                    <p>New to SokoMoja? <a href="#" class="switch" data-to="userRegister">Create account</a></p>
+                </div>
+            </div>
+
+            <!-- User Register -->
+            <div class="auth-content" id="userRegister" style="display:none">
+                <div class="welcome-message"><h2>Join SokoMoja UG Today</h2></div>
+                <form>
+                    <div class="form-group"><label>Full Name</label><input required></div>
+                    <div class="form-group"><label>Email</label><input type="email" required></div>
+                    <div class="form-group"><label>Phone</label><input type="tel" required></div>
+                    <div class="form-group"><label>Password</label><input type="password" required></div>
+                    <button type="submit" class="auth-btn">Create Account</button>
+                </form>
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="#" class="switch" data-to="userAuth">Log in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info + carousel -->
+<section class="info-section">
+    <div class="info-header">
+        <h2>Why Choose SokoMoja Uganda?</h2>
+        <p>SokoMoja is transforming commerce in Uganda by connecting local businesses with customers nationwide through our innovative platform.</p>
+    </div>
+
+    <div class="carousel">
+        <div class="carousel-inner" id="carouselInner">
+            <div class="carousel-item"><img src="corusel.png" alt="Marketplace"><div class="carousel-caption"><h3>Local Marketplace</h3></div></div>
+            <div class="carousel-item"><img src="Mtnairtel.png" alt="Mobile Money"><div class="carousel-caption"><h3>Mobile Money Integration</h3></div></div>
+            <div class="carousel-item"><img src="agents.png" alt="Delivery"><div class="carousel-caption"><h3>Nationwide Delivery</h3></div></div>
+        </div>
+        <div class="carousel-controls">
+            <div class="carousel-control" id="prevBtn"><i class="fas fa-chevron-left"></i></div>
+            <div class="carousel-control" id="nextBtn"><i class="fas fa-chevron-right"></i></div>
+        </div>
+        <div class="carousel-indicators" id="carouselIndicators">
+            <div class="carousel-indicator active"></div><div class="carousel-indicator"></div><div class="carousel-indicator"></div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+    <h2>Ready to Join the SokoMoja Family?</h2>
+    <p>Sign up now and start your journey with Uganda's leading online marketplace</p>
+    <a href="sokomoja-auth.html" class="cta-btn primary-minimal"><i class="fas fa-user-plus"></i> Sign Up / Login</a>
+</div>
+
+<script>
+/* ---------- Language picker ---------- */
+const langBtn=document.getElementById('languageBtn'),langDrop=document.getElementById('languageDropdown');
+langBtn.addEventListener('click',()=>langDrop.classList.toggle('show'));
+document.querySelectorAll('.language-dropdown a').forEach(a=>{
+    a.addEventListener('click',e=>{
+        e.preventDefault();
+        langBtn.querySelector('span').textContent=a.textContent;
+        langDrop.classList.remove('show');
+    });
+});
+document.addEventListener('click',e=>{
+    if(!langBtn.contains(e.target) && !langDrop.contains(e.target)) langDrop.classList.remove('show');
+});
+
+/* ---------- Tab switch ---------- */
+const tabs=document.querySelectorAll('.auth-tab'),contents={retailer:document.getElementById('retailerAuth'),user:document.getElementById('userAuth')};
+tabs.forEach(t=>t.addEventListener('click',()=>{
+    tabs.forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    Object.values(contents).forEach(c=>c.style.display='none');
+    contents[t.dataset.tab].style.display='block';
+}));
+
+/* ---------- Login / Register form switch ---------- */
+document.addEventListener('click',e=>{
+    if(e.target.classList.contains('switch')){
+        e.preventDefault();
+        const show=e.target.dataset.to;
+        document.querySelectorAll('.auth-content').forEach(c=>c.style.display='none');
+        document.getElementById(show).style.display='block';
+    }
+});
+
+/* ---------- DEMO LOGIN ---------- */
+const demoCreds={retailer:{email:'admin@sokomoja.ug',pass:'Admin444'},user:{email:'user@sokomoja.ug',pass:'User444'}};
+document.querySelectorAll('.demoForm').forEach(f=>{
+    f.addEventListener('submit',e=>{
+        e.preventDefault();
+        const role=e.target.dataset.role;
+        const [email,pass]=[e.target.querySelector('input[type=text],input[type=email]').value.trim().toLowerCase(),
+                           e.target.querySelector('input[type=password]').value];
+        if(email===demoCreds[role].email && pass===demoCreds[role].pass){
+            window.location.href='dashboard.html';  // <-- your home page
+        }else{
+            alert('Wrong demo credentials.contact admin');
+        }
+    });
+});
+
+/* ---------- Carousel ---------- */
+let cur=0,items=document.querySelectorAll('.carousel-item'),indics=document.querySelectorAll('.carousel-indicator');
+function slide(){document.getElementById('carouselInner').style.transform=`translateX(-${cur*100}%)`;indics.forEach((i,k)=>i.classList.toggle('active',k===cur));}
+document.getElementById('nextBtn').addEventListener('click',()=>{cur=(cur+1)%items.length;slide();});
+document.getElementById('prevBtn').addEventListener('click',()=>{cur=(cur-1+items.length)%items.length;slide();});
+indics.forEach((i,k)=>i.addEventListener('click',()=>{cur=k;slide();}));
+setInterval(()=>{cur=(cur+1)%items.length;slide();},5000);
+</script>
+</body>
+</html>
