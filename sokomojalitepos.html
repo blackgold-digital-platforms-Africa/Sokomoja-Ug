@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>SokoMoja Uganda - Retail-Lite POS | Modern Smart Retail Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0bcf3c;
+            --primary-light: #60a5fa;
+            --primary-dark: #046926;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #0f172a;
+            --dark-light: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --whatsapp: #25D366;
+            --telegram: #0088cc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--dark-light);
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        /* Mobile-first header adjustments */
+        header {
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.85);
+        }
+        
+        /* Mobile-first styles */
+        .header-container {
+            padding: 0 1rem;
+            gap: 1rem;
+        }
+        
+        .logo img {
+            height: 36px;
+        }
+        
+        nav {
+            order: 3;
+            width: 100%;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        nav.active {
+            max-height: 500px;
+            padding: 1rem 0;
+        }
+        
+        .mobile-menu {
+            display: block;
+            margin-left: auto;
+        }
+        
+        /* Desktop styles */
+        @media (min-width: 1024px) {
+            header {
+                position: fixed;
+                padding: 0.8rem 0;
+            }
+            
+            /* Header optimizations */
+            .header-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem 2rem;
+            }
+            
+            .nav-auth-wrapper {
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+            }
+            
+            .header-nav {
+                display: flex;
+                gap: 1.5rem;
+            }
+            
+            .auth-buttons {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .lang-select {
+                padding: 0.5rem;
+                border-radius: 4px;
+                border: 1px solid var(--border-color);
+            }
+            
+            @media (max-width: 768px) {
+                .header-container {
+                    padding: 1rem;
+                }
+                
+                .nav-auth-wrapper {
+                    flex-direction: column;
+                    width: 100%;
+                    gap: 1rem;
+                }
+                
+                .header-nav {
+                    flex-wrap: wrap;
+                    justify-content: center;
+                }
+                
+                .auth-buttons {
+                    flex-direction: column;
+                    width: 100%;
+                }
+                
+                .auth-buttons .btn {
+                    width: 100%;
+                    text-align: center;
+                }
+            }
+        }
+
+        .mobile-menu {
+            display: block;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+        }
+
+        /* Improved touch targets */
+        nav a, .btn {
+            padding: 0.75rem 1rem;
+            min-width: 44px;
+            min-height: 44px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, var(--dark), var(--dark-light));
+        }
+        
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn-large {
+            padding: 15px 30px;
+            font-size: 16px;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-title p {
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--dark-light);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-light);
+            padding: 50px 0;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero {
+                padding: 150px 0 80px;
+                text-align: center;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+   <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="Logo.png" alt="Retail-Lite POS Logo">
+                <span class="logo-text" data-i18n="logo_text">Sokomoja UG-Lite POS</span>
+            </a>
+            
+            <div class="nav-auth-wrapper">
+                <nav class="header-nav">
+                    <a href="#features" class="nav-link" data-i18n="nav_features">Features</a>
+                    <a href="#pricing" class="nav-link" data-i18n="nav_pricing">Pricing</a>
+                    <a href="#contact" class="nav-link" data-i18n="nav_contact">Contact</a>
+                </nav>
+                
+                <div class="auth-buttons">
+                    <a href="sokomoja-auth.html" class="btn btn-outline" data-i18n="SokomojaPOS Login">Sokomoja POS</a>
+                    <a href="sokomoja-auth.html" class="btn btn-primary" data-i18n="retailer_login">Retailer Login</a>
+                    <select id="languageSwitcher" class="lang-select">
+                        <option value="en">English</option>
+                        <option value="lg">Luganda</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 data-i18n="hero_title">Powerful POS System for Modern Smart Retailers - Works Offline & Online</h1>
+                <p data-i18n="hero_sub">Manage your retail business efficiently with our all-in-one solution featuring inventory management, sales tracking, and integrated support.</p>
+                <div class="hero-buttons">
+                    <a href="sokomoja-auth.html" class="btn btn-primary btn-large" data-i18n="hero_join">Join the Waitlist</a>
+                    <a href="Sokomoja-POS-Dashboard.png" class="btn btn-outline btn-large" data-i18n="Retailer Dashboard Preview">Retailer Dashboard Preview</a>
+                </div>
+            </div>
+           
+            </div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2 data-i18n="features_title">Everything You Need to Run Your Business</h2>
+                <p data-i18n="features_sub">Our comprehensive solution provides all the tools retailers need to manage their operations efficiently offline and online.</p>
+            </div>
+            
+            <div class="features-grid">
+                <!-- 1. Core retail management -->
+                <div class="feature-card">
+                    <i class="ri-store-2-line feature-icon"></i>
+                    <h3 data-i18n="f_1_title">Retail Management</h3>
+                    <p data-i18n="f_1_text">Inventory, sales and customer management — everything in one dashboard.</p>
+                </div>
+
+                <!-- 2. Offline-first sync (important for low-connectivity areas) -->
+                <div class="feature-card">
+                    <i class="ri-hard-drive-2-line feature-icon"></i>
+                    <h3 data-i18n="f_2_title">Offline‑first Sync</h3>
+                    <p data-i18n="f_2_text">Operate without internet; transactions sync automatically when online.</p>
+                </div>
+
+                <!-- 3. Low hardware requirement -->
+                <div class="feature-card">
+                    <i class="ri-computer-line feature-icon"></i>
+                    <h3 data-i18n="f_3_title">No Expensive Hardware Needed</h3>
+                    <p data-i18n="f_3_text">Runs on smartphones, tablets and basic feature phones — no specialized POS required.</p>
+                </div>
+
+              <!-- 4. Payments -->
+                <div class="feature-card">
+                    <div class="feature-icon" aria-hidden="true">
+                        <i class="ri-qrcode-line" title="QR Payments" style="margin-right:10px;"></i>
+                        <i class="ri-wallet-line" title="Mobile Wallets"></i>
+                    </div>
+                    <h3 data-i18n="f_4_title">QR Payments & Mobile Wallets</h3>
+                    <p data-i18n="f_4_text">Accept MTN/Airtel Mobile Money, QR and card payments with easy reconciliation.</p>
+                </div>
+
+                <!-- 5. Inventory automation -->
+                <div class="feature-card">
+                    <i class="ri-alert-line feature-icon"></i>
+                    <h3 data-i18n="f_5_title">Inventory Alerts & Auto‑Reorder</h3>
+                    <p data-i18n="f_5_text">Low‑stock notifications and reorder suggestions to avoid stockouts.</p>
+                </div>
+
+                <!-- 6. Loyalty -->
+                <div class="feature-card">
+                    <i class="ri-gift-line feature-icon"></i>
+                    <h3 data-i18n="f_6_title">Loyalty & Promotions</h3>
+                    <p data-i18n="f_6_text">Create discounts, loyalty points and promo campaigns to boost repeat sales.</p>
+                </div>
+
+                <!-- 7. Cloud sync -->
+                <div class="feature-card">
+                    <i class="ri-cloud-line feature-icon"></i>
+                    <h3 data-i18n="f_7_title">Cloud‑Based Sync</h3>
+                    <p data-i18n="f_7_text">Secure cloud storage for backups and cross‑device synchronization.</p>
+                </div>
+
+                <!-- 8. Invoicing -->
+                <div class="feature-card">
+                    <i class="ri-file-text-line feature-icon"></i>
+                    <h3 data-i18n="f_8_title">Easy Invoicing & Receipts</h3>
+                    <p data-i18n="f_8_text">Print receipts or send digital invoices via SMS/WhatsApp/email.</p>
+                </div>
+
+                <!-- 9. Security -->
+                <div class="feature-card">
+                    <i class="ri-shield-keyhole-line feature-icon"></i>
+                    <h3 data-i18n="f_9_title">Secure & Reliable</h3>
+                    <p data-i18n="f_9_text">Role‑based access and encryption keep your business data safe.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3 data-i18n="footer_title">SokoMoja-Lite POS</h3>
+                    <p data-i18n="footer_about">Modern Smart Point of Sale System designed for retailers of all sizes.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h3 data-i18n="footer_links_title">Quick Links</h3>
+                     <ul>
+                        <li><a href="#features" data-i18n="nav_features_short">Features</a></li>
+                        <li><a href="#pricing" data-i18n="nav_pricing_short">Pricing</a></li>
+                        <li><a href="#contact" data-i18n="nav_contact_short">Contact</a></li>
+                     </ul>
+                 </div>
+                 
+                 <div class="footer-col">
+                    <h3 data-i18n="footer_support_title">Support</h3>
+                     <ul>
+                        <li><a href="mailto:support@retaillitepos.co.ke" data-i18n="email_support">Email Support</a></li>
+                        <li><a href="tel:+254700123456" data-i18n="phone_support">Phone Support</a></li>
+                        <li><a href="/retailer" data-i18n="retailer_login_short">Retailer Login</a></li>
+                     </ul>
+                 </div>
+                 
+                 <div class="footer-col">
+                    <h3 data-i18n="footer_legal_title">Legal</h3>
+                     <ul>
+                        <li><a href="#" data-i18n="nav_terms">Terms of Service</a></li>
+                        <li><a href="#" data-i18n="nav_privacy">Privacy Policy</a></li>
+                        <li><a href="#" data-i18n="gdpr">GDPR Compliance</a></li>
+                     </ul>
+                 </div>
+             </div>
+             
+             <div class="copyright">
+                <p data-i18n="copyright">&copy; 2025 SokoMoja-Lite POS. All rights reserved. Sokomoja UG LTD</p>
+             </div>
+         </div>
+     </footer>
+ 
+    <script>
+        // embedded translation library (English + Luganda placeholders)
+        const TRANSLATIONS = {
+            en: {
+                logo_text: "Sokomoja-Lite POS",
+                nav_features: "Features",
+                nav_pricing: "Pricing",
+                nav_contact: "Contact",
+                nav_privacy: "Privacy Policy",
+                nav_terms: "Terms of Service",
+                admin_login: " SokomojaPOS Login",
+                retailer_login: "Retailer Login",
+                hero_title: "Powerful POS System for Modern Smart Retailers - Works Offline & Online",
+                hero_sub: "Manage your retail business efficiently with our all-in-one solution featuring inventory management, sales tracking, and integrated support.",
+                hero_join: "Join the Waitlist",
+                hero_retailer_login: "Retailer Dashboard Login",
+                features_title: "Everything You Need to Run Your Business",
+                features_sub: "Our comprehensive solution provides all the tools retailers need to manage their operations efficiently offline and online.",
+                f_1_title: "Retail Management",
+                f_1_text: "Inventory, sales and customer management — everything in one dashboard.",
+                f_2_title: "Offline‑first Sync",
+                f_2_text: "Operate without internet; transactions sync automatically when online.",
+                f_3_title: "No Expensive Hardware Needed",
+                f_3_text: "Runs on smartphones, tablets and basic feature phones — no specialized POS required.",
+                f_4_title: "QR Payments & Mobile Wallets",
+                f_4_text: "Accept MTN/Airtel Mobile Money, QR and card payments with easy reconciliation.",
+                f_5_title: "Inventory Alerts & Auto‑Reorder",
+                f_5_text: "Low‑stock notifications and reorder suggestions to avoid stockouts.",
+                f_6_title: "Loyalty & Promotions",
+                f_6_text: "Create discounts, loyalty points and promo campaigns to boost repeat sales.",
+                f_7_title: "Cloud‑Based Sync",
+                f_7_text: "Secure cloud storage for backups and cross‑device synchronization.",
+                f_8_title: "Easy Invoicing & Receipts",
+                f_8_text: "Print receipts or send digital invoices via SMS/WhatsApp/email.",
+                f_9_title: "Secure & Reliable",
+                f_9_text: "Role‑based access and encryption keep your business data safe.",
+                footer_title: "SokoMoja-Lite POS",
+                footer_about: "Modern Smart Point of Sale System designed for retailers of all sizes.",
+                footer_links_title: "Quick Links",
+                nav_features_short: "Features",
+                nav_pricing_short: "Pricing",
+                nav_contact_short: "Contact",
+                footer_support_title: "Support",
+                email_support: "Email Support",
+                phone_support: "Phone Support",
+                retailer_login_short: "Retailer Login",
+                footer_legal_title: "Legal",
+                gdpr: "GDPR Compliance",
+                copyright: "© 2025 SokoMoja-Lite POS. All rights reserved. Sokomoja UG LTD"
+            },
+            lg: {
+                // Luganda placeholders — update to preferred translations
+                logo_text: "Sokomoja-Lite POS",
+                nav_features: "Ebiranga",
+                nav_pricing: "Obuwendo",
+                nav_contact: "Ebifunye",
+                nav_privacy: "Sokomoja Ug POS",
+                nav_terms: "Ebigendererwa",
+                admin_login: "SokomojaPOS Login",
+                retailer_login: "Omusuubuzi Login",
+                hero_title: "Enkola ya POS ey'amaanyi eri abasuubuzi abagezi ab'omulembe - ekola offline",
+                hero_sub: "Dukanya bulungi bizinensi yo ey’okutunda n’okugonjoola kwaffe kwonna mu kimu nga mulimu okuddukanya eby’obugagga, okulondoola okutunda, n’obuyambi obugatta.",
+                hero_join: "Weegatte ku lukalala lw'okulinda",
+                hero_retailer_login: "Omusuubuzi Dashboard Preview .",
+                features_title: "Buli kye weetaaga okuddukanya bizinensi yo .",
+                features_sub: "Ekyebikozesebwa byonna kyaffe ekijjuvu kiwa ebikozesebwa byonna abasuubuzi bye balina okuddukanya emirimu gyabwe mu ngeri ennungi nga tebali ku mukutu era nga bali ku mutimbagano., offline ne online.",
+                f_1_title: "Enzirukanya y’okutunda Inventory",
+                f_1_text: "okutunda n’okuddukanya bakasitoma — buli kimu mu dashiboodi emu.",
+                f_2_title: "Okukola Offline, okukola nga tolina yintaneeti;",
+                f_2_text: " ebikozesebwa byonna okukola nga tolina yintaneeti",
+                f_3_title: "Tekyetaagisa kukola hardware ya bbeeyi .",
+                f_3_text: "Ekola ku ssimu ez’amaanyi, tablets ne basic feature phones — tekyetaagisa POS ya njawulo.",
+                f_4_title: "EKkiriza QR ne Mobile Wallets",
+                f_4_text: "Kkiriza MTN/Airtel Mobile Money, QR ne card payments n'okutabagana okwangu..",
+                f_5_title: "Okulabula kw'ebintu eby'obugagga .",
+                f_5_text: "Okumanyisibwa kw’ebintu ebitono n’okuddamu okusengeka ebiteeso okwewala sitokisi..",
+                f_6_title: "Obwesigwa",
+                f_6_text: "Tunda discounts, loyalty points ne promo campaigns okutumbula okutunda okuddiŋgaŋa..",
+                f_7_title: "Cloud‐Okukwatagana okwesigamiziddwa ku kire .",
+                f_7_text: "Obukuumi bw'ekire obukuumi ku backups ne cross‐device synchronization.",
+                f_8_title: "Eyanguya Okuwandiika Invoice ne Receipt.",
+                f_8_text: "Kuba lisiiti oba weereza invoice za digito ng’oyita mu SMS/WhatsApp/Email.",
+                f_9_title: "Eky'Obukuumi n'Obwesigwa",
+                f_9_text: "Okuyingira n’okusiba emirimu egy’okusinziira ku mulimu bikuume data ya bizinensi yo nga terimu bulabe.",
+                footer_title: "SokoMoja-Lite POS",
+                footer_about: "Enkola ya smart point of sale ey’omulembe ekoleddwa eri abasuubuzi aba buli sayizi.",
+                footer_links_title: "Enkola",
+                nav_features_short: "Ebiranga",
+                nav_pricing_short: "Obuwendo",
+                nav_contact_short: "Ebifunye",
+                footer_support_title: "Obuyambi",
+                email_support: "E-meyiro Empya",
+                phone_support: "Ekyokuyamba ku Ffoni",
+                retailer_login_short: "Wuliriza Omusikitiro",
+                footer_legal_title: "Eby'Enteekateeka",
+                gdpr: "Okukola ne GDPR",
+                copyright: "© 2025 Sok SokoMojaUg-Lite POS. obukuumi mu ngeri ennungi nga tebali ku mukutu era nga bali ku mutimbagano."
+            }
+        };
+
+        function applyTranslations(lang) {
+            const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (!key) return;
+                const txt = dict[key];
+                if (typeof txt === 'undefined') return;
+                // respect elements that were originally HTML-heavy
+                el.innerText = txt;
+            });
+            // placeholders / alt attributes
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                el.setAttribute('placeholder', (TRANSLATIONS[lang][key] || TRANSLATIONS.en[key] || ''));
+            });
+            document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+                const key = el.getAttribute('data-i18n-alt');
+                el.setAttribute('alt', (TRANSLATIONS[lang][key] || TRANSLATIONS.en[key] || ''));
+            });
+        }
+
+        // language selector wiring
+        (function() {
+            const select = document.getElementById('languageSwitcher');
+            const saved = localStorage.getItem('site_lang') || (navigator.language && navigator.language.startsWith('lg') ? 'lg' : 'en');
+            if (select) {
+                select.value = saved;
+                select.addEventListener('change', (e) => {
+                    const v = e.target.value;
+                    localStorage.setItem('site_lang', v);
+                    applyTranslations(v);
+                });
+            }
+            // initial apply
+            applyTranslations(saved);
+        })();
+
+        // Smooth scrolling for anchor links (kept)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                const target = document.querySelector(href);
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
