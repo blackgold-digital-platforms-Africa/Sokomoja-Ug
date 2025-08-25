@@ -5,9 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!-- Favicon -->
     <link rel="icon" href="favicon.png" type="image/x-icon" />
-    <!-- Or for PNG favicon -->
-   
-
     <title>SokoMoja Uganda - Connecting Local Commerce and Communities</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:700&display=swap" rel="stylesheet">
@@ -17,6 +14,7 @@
             --secondary: #222222;
             --accent: #E5352B; /* Uganda red */
             --accent-green: #058032; /* New green */
+            --accent-blue: #00851dff; /* <-- added accent-blue */
             --light-bg: #FAFAFA;
             --dark-bg: #1A1A1A;
             --transition: all 0.3s ease;
@@ -452,6 +450,7 @@
         .cta-btn.accent-blue {
             background: var(--accent-blue);
             color: #fff;
+            border: 2px solid var(--accent-blue);
         }
         .cta-btn.accent-blue:hover {
             background: #1e90cc;
@@ -829,6 +828,7 @@
               
                 <li><a href="#features">For Retailers</a></li>
                 <li><a href="#user-types">For Shoppers</a></li>
+                     <li><a href="sokomojalitepos.html">SokoMoja Lite POS</a></li>
                 <li><a href="about-us.html">About Us</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -848,8 +848,8 @@
                     <i class="fas fa-user-plus"></i> Sign Up / Login
                 </a>
             </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation" aria-expanded="false">
+                <i class="fas fa-bars" aria-hidden="true"></i>
             </button>
         </nav>
     </header>
@@ -879,6 +879,10 @@
                 <a href="sokomoja-auth.html?tab=user" class="cta-btn secondary-btn">
                     <i class="fas fa-shopping-basket" style="margin-right:8px;"></i>
                     I'm a Shopper
+                </a>
+                  <a href="sokomojalitepos.html" class="cta-btn accent-blue">
+                    <i class="fas fa-cash-register" style="margin-right:8px;"></i>
+                    SokoMoja Lite POS
                 </a>
             </div>
         </div>
@@ -957,7 +961,7 @@
 
     <!-- Insert Join Wait List Form here -->
 <section id="join-waitlist" style="padding: 60px 5%; background: var(--light-bg);">
-  <form action="https://formspree.io/f/xnnznzvg " method="POST" class="join-waitlist-form" novalidate>
+  <form action="https://formspree.io/f/xnnznzvg" method="POST" class="join-waitlist-form" novalidate>
     <h2>Join Wait List</h2>
 
     <label for="name">Business Name | Shopper | Agent </label>
@@ -981,7 +985,7 @@
 
 
     <!-- Stats Section -->
-    <section class="stats">
+    <section class="stats" id="contact">
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-number">5,000+</div>
@@ -1015,8 +1019,7 @@
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
+                    </div>
             </div>
             
             <div class="footer-col">
@@ -1055,25 +1058,39 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle (guarded)
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            document.body.classList.toggle('sidebar-open', navLinks.classList.contains('active'));
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
 
-        // Smooth scrolling for anchor links
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const opened = navLinks.classList.toggle('active');
+                document.body.classList.toggle('sidebar-open', opened);
+                mobileMenuBtn.setAttribute('aria-expanded', opened ? 'true' : 'false');
+                mobileMenuBtn.innerHTML = opened 
+                    ? '<i class="fas fa-times" aria-hidden="true"></i>' 
+                    : '<i class="fas fa-bars" aria-hidden="true"></i>';
+            });
+        }
+
+        // Smooth scrolling for same-page anchors; closes mobile menu if open
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
+                const href = this.getAttribute('href') || '';
+                if (href.length > 1 && href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (navLinks && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            document.body.classList.remove('sidebar-open');
+                            if (mobileMenuBtn) {
+                                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                                mobileMenuBtn.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                            }
+                        }
+                    }
                 }
             });
         });
@@ -1081,14 +1098,12 @@
         // Animate elements on scroll
         const animateOnScroll = () => {
             const elements = document.querySelectorAll('.feature-card, .user-card');
-            
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if(elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
+            const windowHeight = window.innerHeight;
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= windowHeight - 80) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
                 }
             });
         };
@@ -1103,46 +1118,66 @@
         window.addEventListener('load', animateOnScroll);
         window.addEventListener('scroll', animateOnScroll);
 
-        // Ripple effect for .cta-btn
+        // Ripple effect for .cta-btn (robust)
         document.querySelectorAll('.cta-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
+                const el = e.currentTarget;
+                const rect = el.getBoundingClientRect();
                 const circle = document.createElement('span');
-                circle.classList.add('ripple');
-                const rect = btn.getBoundingClientRect();
-                circle.style.left = `${e.clientX - rect.left}px`;
-                circle.style.top = `${e.clientY - rect.top}px`;
-                btn.appendChild(circle);
-                setTimeout(() => circle.remove(), 600);
+                circle.className = 'ripple';
+                const size = Math.max(rect.width, rect.height) * 1.2;
+                circle.style.width = circle.style.height = size + 'px';
+                circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                circle.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                circle.style.position = 'absolute';
+                circle.style.borderRadius = '50%';
+                circle.style.pointerEvents = 'none';
+                circle.style.background = 'rgba(255,255,255,0.5)';
+                circle.style.transform = 'scale(0)';
+                circle.style.transition = 'transform 0.6s linear, opacity 0.6s linear';
+                el.appendChild(circle);
+                // trigger animation frame to ensure transitions run
+                requestAnimationFrame(() => {
+                    circle.style.transform = 'scale(4)';
+                    circle.style.opacity = '0';
+                });
+                setTimeout(() => {
+                    if (circle && circle.parentNode) circle.parentNode.removeChild(circle);
+                }, 700);
             });
         });
 
-        // Highlight active nav link on scroll
-        const sections = document.querySelectorAll('section');
+        // Highlight active nav link on scroll (uses sections with id)
+        const sections = Array.from(document.querySelectorAll('section[id]'));
         const navItems = document.querySelectorAll('.nav-links a');
 
-        window.addEventListener('scroll', () => {
+        const updateActiveNav = () => {
             let current = '';
             sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 120 && rect.bottom > 120) {
+                    current = section.id;
                 }
             });
-            navItems.forEach(li => {
-                li.classList.remove('active');
-                if (current && li.getAttribute('href') === `#${current}`) {
-                    li.classList.add('active');
+            navItems.forEach(a => {
+                const href = a.getAttribute('href') || '';
+                if (href.startsWith('#')) {
+                    a.classList.toggle('active', current && href === '#' + current);
                 }
             });
-        });
+        };
+        window.addEventListener('scroll', updateActiveNav);
+        window.addEventListener('load', updateActiveNav);
 
-        // Hero Carousel Logic
+        // Hero Carousel Logic (guarded)
         const carouselTrack = document.querySelector('.carousel-track');
-        const dots = document.querySelectorAll('.carousel-dots .dot');
+        const heroCarousel = document.querySelector('.hero-carousel');
+        const dots = Array.from(document.querySelectorAll('.carousel-dots .dot'));
         let carouselIndex = 0;
 
         function showCarouselSlide(idx) {
-            const heroWidth = document.querySelector('.hero-carousel').offsetWidth;
+            if (!carouselTrack || !heroCarousel || !dots.length) return;
+            const heroWidth = heroCarousel.offsetWidth;
             carouselTrack.style.transform = `translateX(-${idx * heroWidth}px)`;
             dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
         }
@@ -1157,7 +1192,9 @@
                 resetCarouselInterval();
             });
         });
+
         function nextCarouselSlide() {
+            if (!dots.length) return;
             carouselIndex = (carouselIndex + 1) % dots.length;
             showCarouselSlide(carouselIndex);
         }
@@ -1176,32 +1213,238 @@
             });
         });
 
-        // Auth tab switching logic
+        // Auth tab switching logic (guarded)
         const authTabs = document.querySelectorAll('.auth-tab');
         const authContents = {
             retailer: document.getElementById('retailerContent'),
             user: document.getElementById('userContent')
         };
 
-        authTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const target = tab.getAttribute('data-tab');
-                authTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                Object.values(authContents).forEach(content => content.style.display = 'none');
-                authContents[target].style.display = 'block';
+        if (authTabs && authTabs.length) {
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    if (!target || !authContents[target]) return;
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    Object.values(authContents).forEach(content => {
+                        if (content) content.style.display = 'none';
+                    });
+                    authContents[target].style.display = 'block';
+                });
+            });
+        }
+
+        // URL parameter handling for auth tabs (guarded)
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            if (tabParam && authContents[tabParam]) {
+                if (authTabs && authTabs.length) authTabs.forEach(t => t.classList.remove('active'));
+                const selector = document.querySelector(`.auth-tab[data-tab="${tabParam}"]`);
+                if (selector) selector.classList.add('active');
+                Object.values(authContents).forEach(content => { if (content) content.style.display = 'none'; });
+                authContents[tabParam].style.display = 'block';
+            }
+        } catch (e) {
+            // URL parsing failed - ignore
+            console.warn('Auth tab URL parsing failed', e);
+        }
+    </script>
+    <!-- 100% privacy-first analytics -->
+<script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<script>
+        // Mobile Menu Toggle (guarded)
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const opened = navLinks.classList.toggle('active');
+                document.body.classList.toggle('sidebar-open', opened);
+                mobileMenuBtn.setAttribute('aria-expanded', opened ? 'true' : 'false');
+                mobileMenuBtn.innerHTML = opened 
+                    ? '<i class="fas fa-times" aria-hidden="true"></i>' 
+                    : '<i class="fas fa-bars" aria-hidden="true"></i>';
+            });
+        }
+
+        // Smooth scrolling for same-page anchors; closes mobile menu if open
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href') || '';
+                if (href.length > 1 && href.startsWith('#')) {
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (navLinks && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            document.body.classList.remove('sidebar-open');
+                            if (mobileMenuBtn) {
+                                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                                mobileMenuBtn.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+                            }
+                        }
+                    }
+                }
             });
         });
-        
 
-        // URL parameter handling for auth tabs
-        const urlParams = new URLSearchParams(window.location.search);
-        const tabParam = urlParams.get('tab');
-        if (tabParam && authContents[tabParam]) {
-            authTabs.forEach(t => t.classList.remove('active'));
-            document.querySelector(`.auth-tab[data-tab="${tabParam}"]`).classList.add('active');
-            Object.values(authContents).forEach(content => content.style.display = 'none');
-            authContents[tabParam].style.display = 'block';
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.feature-card, .user-card');
+            const windowHeight = window.innerHeight;
+            elements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= windowHeight - 80) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        // Set initial state for animation
+        document.querySelectorAll('.feature-card, .user-card').forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(20px)';
+            element.style.transition = 'all 0.5s ease';
+        });
+
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Ripple effect for .cta-btn (robust)
+        document.querySelectorAll('.cta-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                const el = e.currentTarget;
+                const rect = el.getBoundingClientRect();
+                const circle = document.createElement('span');
+                circle.className = 'ripple';
+                const size = Math.max(rect.width, rect.height) * 1.2;
+                circle.style.width = circle.style.height = size + 'px';
+                circle.style.left = (e.clientX - rect.left - size / 2) + 'px';
+                circle.style.top = (e.clientY - rect.top - size / 2) + 'px';
+                circle.style.position = 'absolute';
+                circle.style.borderRadius = '50%';
+                circle.style.pointerEvents = 'none';
+                circle.style.background = 'rgba(255,255,255,0.5)';
+                circle.style.transform = 'scale(0)';
+                circle.style.transition = 'transform 0.6s linear, opacity 0.6s linear';
+                el.appendChild(circle);
+                // trigger animation frame to ensure transitions run
+                requestAnimationFrame(() => {
+                    circle.style.transform = 'scale(4)';
+                    circle.style.opacity = '0';
+                });
+                setTimeout(() => {
+                    if (circle && circle.parentNode) circle.parentNode.removeChild(circle);
+                }, 700);
+            });
+        });
+
+        // Highlight active nav link on scroll (uses sections with id)
+        const sections = Array.from(document.querySelectorAll('section[id]'));
+        const navItems = document.querySelectorAll('.nav-links a');
+
+        const updateActiveNav = () => {
+            let current = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 120 && rect.bottom > 120) {
+                    current = section.id;
+                }
+            });
+            navItems.forEach(a => {
+                const href = a.getAttribute('href') || '';
+                if (href.startsWith('#')) {
+                    a.classList.toggle('active', current && href === '#' + current);
+                }
+            });
+        };
+        window.addEventListener('scroll', updateActiveNav);
+        window.addEventListener('load', updateActiveNav);
+
+        // Hero Carousel Logic (guarded)
+        const carouselTrack = document.querySelector('.carousel-track');
+        const heroCarousel = document.querySelector('.hero-carousel');
+        const dots = Array.from(document.querySelectorAll('.carousel-dots .dot'));
+        let carouselIndex = 0;
+
+        function showCarouselSlide(idx) {
+            if (!carouselTrack || !heroCarousel || !dots.length) return;
+            const heroWidth = heroCarousel.offsetWidth;
+            carouselTrack.style.transform = `translateX(-${idx * heroWidth}px)`;
+            dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+        }
+
+        // Update on window resize
+        window.addEventListener('resize', () => showCarouselSlide(carouselIndex));
+
+        dots.forEach((dot, i) => {
+            dot.addEventListener('click', () => {
+                carouselIndex = i;
+                showCarouselSlide(carouselIndex);
+                resetCarouselInterval();
+            });
+        });
+
+        function nextCarouselSlide() {
+            if (!dots.length) return;
+            carouselIndex = (carouselIndex + 1) % dots.length;
+            showCarouselSlide(carouselIndex);
+        }
+        let carouselInterval = setInterval(nextCarouselSlide, 4000);
+        function resetCarouselInterval() {
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(nextCarouselSlide, 4000);
+        }
+        showCarouselSlide(carouselIndex);
+
+        // Add "Coming Soon" alert to all social media links
+        document.querySelectorAll('.social-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Coming Soon!');
+            });
+        });
+
+        // Auth tab switching logic (guarded)
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authContents = {
+            retailer: document.getElementById('retailerContent'),
+            user: document.getElementById('userContent')
+        };
+
+        if (authTabs && authTabs.length) {
+            authTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    if (!target || !authContents[target]) return;
+                    authTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    Object.values(authContents).forEach(content => {
+                        if (content) content.style.display = 'none';
+                    });
+                    authContents[target].style.display = 'block';
+                });
+            });
+        }
+
+        // URL parameter handling for auth tabs (guarded)
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tabParam = urlParams.get('tab');
+            if (tabParam && authContents[tabParam]) {
+                if (authTabs && authTabs.length) authTabs.forEach(t => t.classList.remove('active'));
+                const selector = document.querySelector(`.auth-tab[data-tab="${tabParam}"]`);
+                if (selector) selector.classList.add('active');
+                Object.values(authContents).forEach(content => { if (content) content.style.display = 'none'; });
+                authContents[tabParam].style.display = 'block';
+            }
+        } catch (e) {
+            // URL parsing failed - ignore
+            console.warn('Auth tab URL parsing failed', e);
         }
     </script>
     <!-- 100% privacy-first analytics -->
